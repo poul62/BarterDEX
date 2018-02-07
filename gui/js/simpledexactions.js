@@ -39,14 +39,14 @@ $(document).ready(function() {
 		if (loginstate !== null && loginstate == 'loggedin') {
 			$('.mainbody').show();
 			$('.loginbody').hide();
-			CheckPortfolio_Interval = setInterval(CheckPortfolioFn,60000);
+			CheckPortfolio_Interval = setInterval(CheckPortfolioFn,300000);
 			CheckPortfolioFn();
 
 			//check_coin_balance_Interval = setInterval(check_coin_balance,3000);
 			//check_coin_balance();
 
 	//---- dICO App Settings START ----//
-			//CheckPortfolio_Interval = setInterval(CheckPortfolioFn,60000);
+			//CheckPortfolio_Interval = setInterval(CheckPortfolioFn,300000);
 			//CheckPortfolioFn();
 
 			var dexmode = sessionStorage.getItem('mm_dexmode');
@@ -318,7 +318,7 @@ $('.btn-activatecoins').click(function(e){
 	$('.screen-addcoins').hide();
 
 	CheckPortfolioFn();
-	CheckPortfolio_Interval = setInterval(CheckPortfolioFn,60000);
+	CheckPortfolio_Interval = setInterval(CheckPortfolioFn,300000);
 });
 
 $('.btn-addcoinsrefresh').click(function(e){
@@ -617,7 +617,7 @@ $('.btn-exchangeclose').click(function(e){
     actiavte_portfolio_coins_list_spinner += '</th>';
     $('.porfolio_coins_list tbody').append(actiavte_portfolio_coins_list_spinner);
 	CheckPortfolioFn();
-	CheckPortfolio_Interval = setInterval(CheckPortfolioFn,60000);
+	CheckPortfolio_Interval = setInterval(CheckPortfolioFn,300000);
 });
 
 
@@ -1734,7 +1734,7 @@ function make_inventory_withdraw(mk_inv_data) {
 		var paprsed_mk_inv_withdraw_data = JSON.parse(mk_inv_withdraw_data);
 
 		if (paprsed_mk_inv_withdraw_data.complete == false) {
-			toastr.error('Uncessful Transaction. Please try again.','Tansaction info');
+			toastr.error('Unsuccessful Transaction. Please try again.','Tansaction info');
 		}
 		if (paprsed_mk_inv_withdraw_data.complete == true) {
 			var mk_inv_confirm_bootbox = bootbox.dialog({
@@ -2113,6 +2113,7 @@ function CheckPortfolioFn(sig) {
 	    data: JSON.stringify(ajax_data),
 	    dataType: 'json',
 	    type: 'POST',
+	    timeout: 61000, // sets timeout to 61 seconds
 	    url: url
 	}).done(function(data) {
 		// If successful
@@ -3093,6 +3094,24 @@ function setOrderPrice(trade_data) {
 
 }
 
+function infoOrderPrice(trade_data) {
+	console.log(trade_data);
+	bootbox.dialog({
+		//title: 'A custom dialog with init',
+		onEscape: true,
+		backdrop: true,
+		message: `<table class="table table-striped orderbook_row_data" width="100%" style="margin-bottom: 0;">
+                          <tbody>
+                          	<tr>
+                          	<td>Address</td>
+                          	<td>${trade_data.address}</td>
+                          	</tr>
+                          </tbody>
+                        </table>`
+	});
+}
+
+
 function CheckOrderBookFn(sig) {
 	if (sig == false) {
 		clearInterval(CheckOrderbook_Interval);
@@ -3159,6 +3178,7 @@ function CheckOrderBookFn(sig) {
 				//console.log(index);
 				//console.log(val);
 				var colorpbk = coloredPubkey(val.pubkey);
+				var coloraddr = coloredPubkey(val.address);
 
 				var mytrade_true = '';
 				if (val.pubkey === mypubkey) {
@@ -3174,20 +3194,23 @@ function CheckOrderBookFn(sig) {
 				row_trade_data.depth = val.depth;
 				row_trade_data.maxbuy = val.avevolume / val.price;
 				row_trade_data.pubkey = val.pubkey;
+				row_trade_data.address = val.address;
 				row_trade_data.type = 'bids';
 				//row_trade_data.totalbuy = (val.avevolume / val.price) * val.numutxos;
 
 				var orderbook_bids_tr = '';
-				orderbook_bids_tr += '<tr ' + mytrade_true + ' onclick=setOrderPrice(' + JSON.stringify(row_trade_data) + ')>';
-				orderbook_bids_tr += '<td>' + val.price + '</td>';
-				//orderbook_bids_tr += '<td>' + val.minvolume + '</td>';
-				//orderbook_bids_tr += '<td>' + val.maxvolume + '</td>';
-				orderbook_bids_tr += '<td>' + ((val.avevolume == 0) ? '-' : val.avevolume) + '</td>';
-				orderbook_bids_tr += '<td>' + val.depth + '</td>';
-				//orderbook_bids_tr += '<td>' + colorpbk.firstpart + '<font style="color: #' + colorpbk.colorpart1 + '; background-color: #' + colorpbk.colorpart1 + ';">' + colorpbk.char1 + '</font><font style="color: #' + colorpbk.colorpart2 + '; background-color: #' + colorpbk.colorpart2 + ';">' + colorpbk.char2 + '</font><font style="color: #' + colorpbk.colorpart3 + '; background-color: #' + colorpbk.colorpart3 + ';">' + colorpbk.char3 + '</font>' + colorpbk.lastpart + '</td>';
-				orderbook_bids_tr += '<td>' + val.age + '</td>';
-				orderbook_bids_tr += '<td>' + val.numutxos + '</td>';
-				orderbook_bids_tr += '<td><span class="glyphicon glyphicon-piggy-bank" aria-hidden="true"></span> ' + val.zcredits.toFixed(2) + '</td>';
+				orderbook_bids_tr += '<tr ' + mytrade_true + '>';
+					orderbook_bids_tr += '<td onclick=setOrderPrice(' + JSON.stringify(row_trade_data) + ')>' + val.price + '</td>';
+					//orderbook_bids_tr += '<td onclick=setOrderPrice(' + JSON.stringify(row_trade_data) + ')>' + val.minvolume + '</td>';
+					//orderbook_bids_tr += '<td onclick=setOrderPrice(' + JSON.stringify(row_trade_data) + ')>' + val.maxvolume + '</td>';
+					orderbook_bids_tr += '<td onclick=setOrderPrice(' + JSON.stringify(row_trade_data) + ')>' + ((val.avevolume == 0) ? '-' : val.avevolume) + '</td>';
+					orderbook_bids_tr += '<td onclick=setOrderPrice(' + JSON.stringify(row_trade_data) + ')>' + val.depth + '</td>';
+					//orderbook_bids_tr += '<td onclick=setOrderPrice(' + JSON.stringify(row_trade_data) + ')>' + coloraddr.firstpart + '<font style="color: #' + coloraddr.colorpart1 + '; background-color: #' + coloraddr.colorpart1 + ';">' + coloraddr.char1 + '</font><font style="color: #' + coloraddr.colorpart2 + '; background-color: #' + coloraddr.colorpart2 + ';">' + coloraddr.char2 + '</font><font style="color: #' + coloraddr.colorpart3 + '; background-color: #' + coloraddr.colorpart3 + ';">' + coloraddr.char3 + '</font>' + coloraddr.lastpart + '</td>';
+					orderbook_bids_tr += '<td onclick=setOrderPrice(' + JSON.stringify(row_trade_data) + ')>' + val.age + '</td>';
+					orderbook_bids_tr += '<td onclick=setOrderPrice(' + JSON.stringify(row_trade_data) + ')>' + val.numutxos + '</td>';
+					orderbook_bids_tr += '<td onclick=setOrderPrice(' + JSON.stringify(row_trade_data) + ')><span class="glyphicon glyphicon-piggy-bank" aria-hidden="true"></span> ' + val.zcredits.toFixed(2) + '</td>';
+					orderbook_bids_tr += '<td><button class="btn btn-xs" onclick=infoOrderPrice(' + JSON.stringify(row_trade_data) + ')><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></button></td>';
+				orderbook_bids_tr += '</tr>';
 				$('.orderbook_bids tbody').append(orderbook_bids_tr);
 			})
 
@@ -3200,6 +3223,7 @@ function CheckOrderBookFn(sig) {
 				//console.log(index);
 				//console.log(val);
 				var colorpbk = coloredPubkey(val.pubkey);
+				var coloraddr = coloredPubkey(val.address);
 
 				var mytrade_true = '';
 				if (val.pubkey === mypubkey) {
@@ -3215,19 +3239,21 @@ function CheckOrderBookFn(sig) {
 				row_trade_data.depth = val.depth;
 				row_trade_data.maxbuy = val.avevolume / val.price;
 				row_trade_data.pubkey = val.pubkey;
+				row_trade_data.address = val.address;
 				row_trade_data.type = 'asks';
 				//row_trade_data.totalbuy = (val.avevolume / val.price) * val.numutxos;
 				var orderbook_asks_tr = '';
-				orderbook_asks_tr += '<tr ' + mytrade_true + ' onclick=setOrderPrice(' + JSON.stringify(row_trade_data) + ')>';
-				orderbook_asks_tr += '<td>' + val.price + '</td>';
-				//orderbook_asks_tr += '<td>' + val.minvolume + ' - ' + val.maxvolume + '</td>';
-				//orderbook_asks_tr += '<td>' + row_trade_data.totalbuy.toFixed(8) + '</td>';
-				orderbook_asks_tr += '<td>' + ((val.avevolume == 0) ? '-' : val.avevolume) + '</td>';
-				orderbook_asks_tr += '<td>' + val.depth + '</td>';
-				//orderbook_asks_tr += '<td>' + colorpbk.firstpart + '<font style="color: #' + colorpbk.colorpart1 + '; background-color: #' + colorpbk.colorpart1 + ';">' + colorpbk.char1 + '</font><font style="color: #' + colorpbk.colorpart2 + '; background-color: #' + colorpbk.colorpart2 + ';">' + colorpbk.char2 + '</font><font style="color: #' + colorpbk.colorpart3 + '; background-color: #' + colorpbk.colorpart3 + ';">' + colorpbk.char3 + '</font>' + colorpbk.lastpart + '</td>';
-				orderbook_asks_tr += '<td>' + val.age + '</td>';
-				orderbook_asks_tr += '<td>' + val.numutxos + '</td>';
-				orderbook_asks_tr += '<td><span class="glyphicon glyphicon-piggy-bank" aria-hidden="true"></span> ' + val.zcredits.toFixed(2) + '</td>';
+				orderbook_asks_tr += '<tr ' + mytrade_true + '>';
+				orderbook_asks_tr += '<td onclick=setOrderPrice(' + JSON.stringify(row_trade_data) + ')>' + val.price + '</td>';
+				//orderbook_asks_tr += '<td onclick=setOrderPrice(' + JSON.stringify(row_trade_data) + ')>' + val.minvolume + ' - ' + val.maxvolume + '</td>';
+				//orderbook_asks_tr += '<td onclick=setOrderPrice(' + JSON.stringify(row_trade_data) + ')>' + row_trade_data.totalbuy.toFixed(8) + '</td>';
+				orderbook_asks_tr += '<td onclick=setOrderPrice(' + JSON.stringify(row_trade_data) + ')>' + ((val.avevolume == 0) ? '-' : val.avevolume) + '</td>';
+				orderbook_asks_tr += '<td onclick=setOrderPrice(' + JSON.stringify(row_trade_data) + ')>' + val.depth + '</td>';
+				//orderbook_asks_tr += '<td onclick=setOrderPrice(' + JSON.stringify(row_trade_data) + ')>' + coloraddr.firstpart + '<font style="color: #' + coloraddr.colorpart1 + '; background-color: #' + coloraddr.colorpart1 + ';">' + coloraddr.char1 + '</font><font style="color: #' + coloraddr.colorpart2 + '; background-color: #' + coloraddr.colorpart2 + ';">' + coloraddr.char2 + '</font><font style="color: #' + coloraddr.colorpart3 + '; background-color: #' + coloraddr.colorpart3 + ';">' + coloraddr.char3 + '</font>' + coloraddr.lastpart + '</td>';
+				orderbook_asks_tr += '<td onclick=setOrderPrice(' + JSON.stringify(row_trade_data) + ')>' + val.age + '</td>';
+				orderbook_asks_tr += '<td onclick=setOrderPrice(' + JSON.stringify(row_trade_data) + ')>' + val.numutxos + '</td>';
+				orderbook_asks_tr += '<td onclick=setOrderPrice(' + JSON.stringify(row_trade_data) + ')><span class="glyphicon glyphicon-piggy-bank" aria-hidden="true"></span> ' + val.zcredits.toFixed(2) + '</td>';
+				orderbook_asks_tr += '<td><button class="btn btn-xs" onclick=infoOrderPrice(' + JSON.stringify(row_trade_data) + ')><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></button></td>';
 				orderbook_asks_tr += '</tr>';
 				$('.orderbook_asks tbody').append(orderbook_asks_tr);
 			})
@@ -5408,7 +5434,7 @@ function check_swap_status(sig) {
 
 	var userpass = sessionStorage.getItem('mm_userpass');
 	var mypubkey = sessionStorage.getItem('mm_mypubkey');
-	var ajax_data = {"userpass":userpass,"method":"swapstatus"};
+	var ajax_data = {"userpass":userpass,"method":"swapstatus","pending":0};
 	var url = "http://127.0.0.1:7783";
 
 	$.ajax({
@@ -5450,7 +5476,7 @@ function check_swap_status(sig) {
 					var exchange_swap_status_tr = '';
 					exchange_swap_status_tr += '<tr>';
 					exchange_swap_status_tr += `<td><div style="color: #e53935; font-size: 15px;"><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span> ${default_lang.SwapStatus.swapstatus_status_error}</div></td>`;
-					exchange_swap_status_tr += '<td>-</td>';
+					exchange_swap_status_tr += `<td>${val.error}</td>`;
 					//exchange_swap_status_tr += '<td>-</td>';
 					exchange_swap_status_tr += '<td>-</td>';
 					exchange_swap_status_tr += '</tr>';
@@ -5647,6 +5673,7 @@ function constructTradesHistory() {
 				<table class="trades-history-table">
 					<tr>
 						<th>#</th>
+						<th>Finish Time</th>
 						<th>${default_lang.TradeHistory.tradehistory_th_direction}</th>
 						<th>${default_lang.TradeHistory.tradehistory_th_pair}</th>
 						<th>${default_lang.TradeHistory.tradehistory_th_sent}</th>
@@ -5670,6 +5697,7 @@ function constructTradesHistory() {
 					iambob_answer = (data.iambob == 0) ? default_lang.Exchange.exchange_botstatus_dialog_buyselltext_buy : default_lang.Exchange.exchange_botstatus_dialog_buyselltext_buy;
 
 					var time = new Date( data.expiration * 1000);
+					var fintime = new Date( data.finishtime * 1000);
 
 					var simplified_dexdetail_tr = '';
 					if (data.iambob == 0) {
@@ -5700,6 +5728,7 @@ function constructTradesHistory() {
 					tradesOut += `
 						<tr>
 							<td>${i + 1}</td>
+							<td>${fintime}</td>
 							<td>
 								<i class="fa fa-arrow-${data.iambob == 0 ? 'right col-green' : 'left col-red'}"></i>&nbsp;
 								<span>${ data.iambob == 0 ? default_lang.Exchange.exchange_botstatus_dialog_buyselltext_bought : default_lang.Exchange.exchange_botstatus_dialog_buyselltext_sold }</span>
@@ -5978,6 +6007,7 @@ function ZeroConfDeposit(deposit_weeks, deposit_amount) {
 	var mypubkey = sessionStorage.getItem('mm_mypubkey');
 	var ajax_data = {"userpass":userpass,"method":"instantdex_deposit","weeks":deposit_weeks,"amount":deposit_amount,"broadcast": 1};
 	var url = "http://127.0.0.1:7783";
+	console.log(ajax_data);
 
 	$.ajax({
 		async: true,
