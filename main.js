@@ -78,7 +78,7 @@ function createWindow (status) {
 
   // and load the index.html of the app.
   mainWindow.loadURL(url.format({
-    pathname: path.join(__dirname, 'gui/index.html'),
+    pathname: path.join(__dirname, process.argv.indexOf('basic') > -1 ? 'notsouglygui/index.html' : 'gui/index.html'),
     protocol: 'file:',
     slashes: true
   }))

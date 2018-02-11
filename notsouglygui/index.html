@@ -1,0 +1,1607 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>BarterDEX | Basic UI - v0.8.8-rc</title>
+
+    <link href="css/toastr.min.css" type="text/css" rel="stylesheet">
+    <link href="css/notsougly.css" type="text/css" rel="stylesheet">
+    <link href="css/customdex.css" type="text/css" rel="stylesheet">
+    <link href="css/bootstrap-slider.min.css" rel="stylesheet">
+
+    <!-- Bootstrap -->
+    <!--link href="css/bootstrap.min.css" type="text/css" rel="stylesheet" id="bright_css_style">
+    <link href="css/fuelux.min.css" type="text/css" rel="stylesheet">
+    <link href="css/bootstrap-panelnavtabs.css" type="text/css" rel="stylesheet">
+    <link href="css/bootstrap-select.min.css" type="text/css" rel="stylesheet">
+    <link href="css/toastr.min.css" type="text/css" rel="stylesheet">
+    <link href="js/amcharts/plugins/export/export.css" type="text/css" rel="stylesheet"  media="all" />
+    <link href="css/bootstrap-toggle.min.css" rel="stylesheet">
+    <link href="css/custom.css" type="text/css" rel="stylesheet">
+    <link href="css/dark-theme.css" type="text/css" rel="stylesheet" id="dark_css_style">
+    <link href="css/spinner.css" type="text/css" rel="stylesheet">
+    <link href="js/fa/css/font-awesome.min.css" type="text/css" rel="stylesheet">
+    <link href="css/jquery.mCustomScrollbar.min.css" type="text/css" rel="stylesheet">
+    <link href="css/HoldOn.min.css" type="text/css" rel="stylesheet">
+    <link href="css/pretty-checkbox.min.css" type="text/css" rel="stylesheet">
+
+    <link href="css/charts/StockChartX.min.css" type="text/css" rel="stylesheet">
+    <link href="css/charts/StockChartX.UI.min.css" type="text/css" rel="stylesheet">
+    <link href="css/charts/StockChartX.External.min.css" type="text/css" rel="stylesheet">
+    <link href="css/charts/site.css" type="text/css" rel="stylesheet">
+
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" type="text/css">
+
+    <link href="css/klingon-font.css" type="text/css" rel="stylesheet">
+
+    <style type="text/css">
+      @import url('http://fonts.googleapis.com/css?family=Open+Sans');
+      @font-face{
+          font-family:'Open Sans';
+          font-style:normal;
+          font-weight:400;
+          src:local('Open Sans'),
+              local('OpenSans'),
+              url('http://fonts.gstatic.com/s/opensans/v10/cJZKeOuBrn4kERxqtaUH3bO3LdcAZYWl9Si6vvxL-qU.woff') format('woff');
+      }
+      body {
+        font-family:'Open Sans', 'Helvetica Neue', Helvetica, sans-serif;
+      }
+    </style>
+
+    <style type="text/css">
+      .table-fixed thead {
+        width: 97%;
+      }
+      .table-fixed tbody {
+        height: 230px;
+        overflow-y: auto;
+        width: 100%;
+      }
+      .table-fixed thead, .table-fixed tbody, .table-fixed tr, .table-fixed td, .table-fixed th {
+        display: block;
+      }
+      .table-fixed tbody td, .table-fixed thead > tr> th {
+        float: left;
+        border-bottom-width: 0;
+      }
+    </style-->
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <script>
+      if (typeof module === 'object') {
+        window.module = module;
+        module = undefined;
+      }
+    </script>
+
+    <script>
+      if (window.module)
+        module = window.module;
+      const templates = {};
+    </script>
+
+  </head>
+  <body class="mCustomScrollbar" data-mcs-theme="minimal-dark">
+    <div class="switch-gui">
+      <button onClick="enableOldGui()">Switch GUI</button>
+      <button onClick="addcoins_dialog()">Add</button>
+    </div>
+    <div class="app_top_alert_div"></div>
+
+    <div class="dex">
+       <content class="app content-container">
+          <ul class="growler"></ul>
+          <header class="window-header">
+             <ul>
+                <li class="window__controls_left"><button class="action danger green dexsettings-btn">Settings</button></li>
+                <!--li class="window__controls_left"><button class="action dark">Start MM</button><button class="action dark">Stop MM</button><button class="action dark">Restart MM</button></li-->
+                <li class="window__title">
+                   <i class="window-header-logo">
+                      <svg version="1.0" viewBox="0 0 800.000000 600.000000" preserveAspectRatio="xMidYMid meet">
+                         <defs>
+                            <linearGradient id="gradient">
+                               <stop offset="0%" stop-color="#9300FF"></stop>
+                               <stop offset="49%" stop-color="#5272E2"></stop>
+                               <stop offset="95%" stop-color="#4C84FF"></stop>
+                            </linearGradient>
+                         </defs>
+                         <g transform="translate(-100.000000,800.000000) scale(0.100000,-0.100000)" fill="url(#gradient)" stroke="none">
+                            <path d="M5310 3550 l0 -120 -38 0 c-56 0 -186 -35 -242 -66 -258 -141 -359 -466 -228 -734 41 -85 151 -196 235 -239 115 -58 268 -77 378 -47 230 61 382 289 346 517 -6 35 -11 67 -11 72 0 4 -63 7 -140 7 l-139 0 24 -46 c32 -60 34 -147 5 -203 -47 -93 -162 -148 -252 -122 -174 51 -230 261 -101 383 59 57 70 58 463 58 l360 0 0 30 c0 52 -30 179 -56 237 -34 78 -104 172 -171 233 -100 89 -274 159 -395 160 l-38 0 0 -120z m334 -154 c76 -32 106 -136 59 -202 -30 -42 -86 -68 -132 -60 -134 21 -162 197 -40 258 41 22 69 22 113 4z"></path>
+                         </g>
+                      </svg>
+                   </i>
+                   <h1>
+                      Barter <strong>DEX</strong>
+                   </h1>
+                   <small class="window-header-appversion">version 0.8.8</small>
+                </li>
+                <li class="window__controls_right"><button class="action danger dexlogout-btn">logout</button></li>
+             </ul>
+          </header>
+          <section class="app-view loginbody" style="display: none">
+            <div class="login">
+                <div class="Placeholder-bg"><span></span></div>
+                <section class="Placeholder-tagline">
+                   <i class="Placeholder-logo">
+                      <svg version="1.0" viewBox="0 0 800.000000 600.000000" preserveAspectRatio="xMidYMid meet">
+                         <defs>
+                            <linearGradient id="gradient">
+                               <stop offset="0%" stop-color="#9300FF"></stop>
+                               <stop offset="49%" stop-color="#5272E2"></stop>
+                               <stop offset="95%" stop-color="#4C84FF"></stop>
+                            </linearGradient>
+                         </defs>
+                         <g transform="translate(-100.000000,800.000000) scale(0.100000,-0.100000)" fill="url(#gradient)" stroke="none">
+                            <path d="M5310 3550 l0 -120 -38 0 c-56 0 -186 -35 -242 -66 -258 -141 -359 -466 -228 -734 41 -85 151 -196 235 -239 115 -58 268 -77 378 -47 230 61 382 289 346 517 -6 35 -11 67 -11 72 0 4 -63 7 -140 7 l-139 0 24 -46 c32 -60 34 -147 5 -203 -47 -93 -162 -148 -252 -122 -174 51 -230 261 -101 383 59 57 70 58 463 58 l360 0 0 30 c0 52 -30 179 -56 237 -34 78 -104 172 -171 233 -100 89 -274 159 -395 160 l-38 0 0 -120z m334 -154 c76 -32 106 -136 59 -202 -30 -42 -86 -68 -132 -60 -134 21 -162 197 -40 258 41 22 69 22 113 4z"></path>
+                         </g>
+                      </svg>
+                   </i>
+                   <h1 class="Placeholder-text">
+                      Barter <strong>DEX</strong>
+                   </h1>
+                   <section class="form">
+                      <div class="login-newpassphrase">
+                         <button class="Clipboard action lefttext normaltext dark login-genpass-btn">
+                            <span>Generate a new passphrase</span>
+                            <i class="Clipboard-icon">
+                               <svg id="Layer_1" version="1.1" viewBox="0 0 512 512">
+                                  <g>
+                                     <polygon points="304,96 288,96 288,176 368,176 368,160 304,160"></polygon>
+                                     <path d="M325.3,64H160v48h-48v336h240v-48h48V139L325.3,64z M336,432H128V128h32v272h176V432z M384,384H176V80h142.7l65.3,65.6V384 z"></path>
+                                  </g>
+                               </svg>
+                            </i>
+                         </button>
+                      </div>
+                      <textarea name="passphrase" id="loginPassphrase" class="loginPassphrase" placeholder="Enter here your passphrase" style="font-size: 18px; min-width: 260px; width: 360px;"></textarea>
+                     <button class="action align-left danger login-passphrase-notice" id="passphrase-gen" style="display: none">
+                        <span>
+                           <strong>
+                              Backup your passpharase, <br><u>it can't be retrieved!</u>
+                           </strong>
+                        </span>
+                        <i>
+                           <svg id="Layer_1" version="1.1" viewBox="0 0 512 512">
+                              <g>
+                                 <path d="M223.9,329.7c-2.4,2.4-5.8,4.4-8.8,4.4s-6.4-2.1-8.9-4.5l-56-56l17.8-17.8l47.2,47.2l124.8-125.7l17.5,18.1L223.9,329.7z"></path>
+                              </g>
+                           </svg>
+                        </i>
+                     </button>
+                      <button class="login-button withBorder action centered primary login-btn" id="login-btn">
+                         <span>Login</span>
+                         <i>
+                            <svg id="Layer_1" version="1.1" viewBox="0 0 512 512">
+                               <polygon points="160,115.4 180.7,96 352,256 180.7,416 160,396.7 310.5,256 "></polygon>
+                            </svg>
+                         </i>
+                      </button>
+                   </section>
+                   <footer><small>version 0.8.8</small></footer>
+                </section>
+             </div>
+             <div class="notifier">
+                <div class="notifier-title">
+                   <i class="notifier-title-icon">
+                      <svg version="1.1" viewBox="0 0 48 48">
+                         <g class="st0" id="Padding__x26__Artboard"></g>
+                         <g id="Icons">
+                            <g>
+                               <g>
+                                  <circle class="st1-angry" cx="24" cy="24" r="12.244"></circle>
+                               </g>
+                               <g>
+                                  <path class="st1-angry" d="M15.15215,24.5226c0,0,2.00649,1.63687,6.99631,1.58407"></path>
+                                  <path class="st2-angry" d="M19.50464,25.96163c0.17131,0.19669,0.27283,0.45049,0.27283,0.72332 c0,0.62815-0.50125,1.1294-1.12939,1.1294c-0.6218,0-1.1294-0.50125-1.1294-1.1294c0-0.41876,0.22842-0.78042,0.57104-0.97077 l0.47932,0.09953C18.56904,25.81371,19.43601,25.95249,19.50464,25.96163z"></path>
+                                  <path class="st1-angry" d="M32.84785,24.5226c0,0-2.00649,1.63687-6.99631,1.58407"></path>
+                                  <path class="st2-angry" d="M29.91028,25.71417c0.34262,0.19035,0.57104,0.55201,0.57104,0.97077 c0,0.62815-0.50759,1.1294-1.1294,1.1294c-0.62815,0-1.12939-0.50125-1.12939-1.1294c0-0.27283,0.10152-0.52663,0.27283-0.72332 L29.91028,25.71417z"></path>
+                                  <ellipse class="st2-angry" cx="24.12855" cy="30.68728" rx="3.48496" ry="0.48842"></ellipse>
+                               </g>
+                            </g>
+                         </g>
+                      </svg>
+                   </i>
+                   <h1 class="notifier-title-text">Sorry!</h1>
+                </div>
+                <ul class="notifier-items"><span>Errors here</span><small class="notifier-appversion">version 0.8.8</small><button class="notifier-close">OK / Retry</button></ul>
+             </div>
+          </section>
+          <section class="dashboard mainbodyy" id="dashboard-coins" style="display: none">
+             <section class="dashboard-wallets">
+                <header class="dashboard-wallets-header component-header">
+                   <i class="dashboard-empty-logo">
+                      <svg viewBox="0 0 800.000000 600.000000" preserveAspectRatio="xMidYMid meet">
+                         <defs>
+                            <linearGradient id="gradient">
+                               <stop offset="0%" stop-color="#9300FF"></stop>
+                               <stop offset="49%" stop-color="#5272E2"></stop>
+                               <stop offset="95%" stop-color="#4C84FF"></stop>
+                            </linearGradient>
+                         </defs>
+                         <g transform="translate(-100.000000,800.000000) scale(0.100000,-0.100000)" fill="url(#gradient)" stroke="none">
+                            <path d="M5310 3550 l0 -120 -38 0 c-56 0 -186 -35 -242 -66 -258 -141 -359 -466 -228 -734 41 -85 151 -196 235 -239 115 -58 268 -77 378 -47 230 61 382 289 346 517 -6 35 -11 67 -11 72 0 4 -63 7 -140 7 l-139 0 24 -46 c32 -60 34 -147 5 -203 -47 -93 -162 -148 -252 -122 -174 51 -230 261 -101 383 59 57 70 58 463 58 l360 0 0 30 c0 52 -30 179 -56 237 -34 78 -104 172 -171 233 -100 89 -274 159 -395 160 l-38 0 0 -120z m334 -154 c76 -32 106 -136 59 -202 -30 -42 -86 -68 -132 -60 -134 21 -162 197 -40 258 41 22 69 22 113 4z"></path>
+                         </g>
+                      </svg>
+                   </i>
+                   <div class="recharts-responsive-container dashboard-balances-pie" style="width: 250px; height: 450px;"></div>
+                   <h1 style="color: rgb(158, 158, 158);">
+                      <label>Estimated balance</label>
+                      <!--span>
+                         BTC
+                      </span-->
+                      <span>
+                         <span id="kmd-equiv-balance"></span> KMD
+                      </span>
+                      <!-- fiat balance -->
+                      <!--small class="margin-top-10 margin-bottom-25">
+                         $
+                      </small-->
+                   </h1>
+                   <!--button class="action dark margin-top-15">
+                      <span>swap history</span>
+                      <i>
+                         <svg id="Layer_1" version="1.1" viewBox="0 0 30 30">
+                            <path d="M16.414,13.586c0.781,0.781,0.781,2.047,0,2.828c-0.781,0.781-2.047,0.781-2.828,0c-0.544-0.544-3.044-4.418-4.508-6.715 C8.818,9.292,9.292,8.818,9.699,9.078C11.996,10.542,15.87,13.041,16.414,13.586z"></path>
+                            <path d="M6.58,7.93 C4.971,9.841,4,12.306,4,15c0,6.075,4.925,11,11,11s11-4.925,11-11S21.075,4,15,4v4" style="fill: none; stroke: rgb(204, 204, 204); stroke-width: 2; stroke-linecap: round; stroke-miterlimit: 10;"></path>
+                         </svg>
+                      </i>
+                   </button>
+                   <button class="action dark margin-top-15">
+                      <span>prices</span>
+                      <i>
+                         <svg id="Layer_1" version="1.1" viewBox="0 0 30 30">
+                            <path d="M26,26h-4V13c0-0.552,0.448-1,1-1h2c0.552,0,1,0.448,1,1V26z"></path>
+                            <path d="M20,26h-4v-9c0-0.552,0.448-1,1-1h2c0.552,0,1,0.448,1,1V26z"></path>
+                            <path d="M14,26h-4V15c0-0.552,0.448-1,1-1h2c0.552,0,1,0.448,1,1V26z"></path>
+                            <path d="M8,26H4v-7c0-0.552,0.448-1,1-1h2c0.552,0,1,0.448,1,1V26z"></path>
+                            <circle cx="24" cy="6" r="2"></circle>
+                            <circle cx="18" cy="11" r="2"></circle>
+                            <circle cx="12" cy="8" r="2"></circle>
+                            <circle cx="6" cy="12" r="2"></circle>
+                            <polyline points="  6,12 12,8 18,11 24,6 " style="fill: none; stroke: rgb(0, 0, 0); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; stroke-miterlimit: 10;"></polyline>
+                         </svg>
+                      </i>
+                   </button-->
+                </header>
+                <div class="screen-portfolio" style="margin-top: 60px;">
+
+                  <!--div class="col-sm-12">
+                    <div class="panel panel-default">
+                      <div class="panel-heading">
+                        <h3 class="panel-title language" data-langstr="portfolio_portfolio_chart"></h3>
+                        <button class="btn btn-xs btn-info" style="float: right; margin-right: -6px; margin-top: -20px"><span class="language" data-langstr="portfolio_add_coins"></span> <span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
+                        <button class="btn btn-xs btn-refreshportfolio portfolio" style="float: right; margin-right: 6px; margin-top: -20px"><span class="glyphicon glyphicon-refresh" aria-hidden="true"></span></button>
+                      </div>
+                      <div class="portfolio portfolio-coinslist">
+                        <div class="col-sm-6" id="portfolio_chart_current" style="height: 300px;"></div>
+                        <div class="col-sm-6" id="portfolio_chart_target" style="height: 300px;"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div-->
+
+                <!-- todo spinner
+                                  <svg id="portfolio-coins-spinner">
+                                    <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="5" stroke-miterlimit="10"/>
+                                    <circle class="path2" cx="50" cy="50" r="20" fill="none" stroke-width="5" stroke-miterlimit="10"/>
+                                    <circle class="path3" cx="50" cy="50" r="20" fill="none" stroke-width="5" stroke-miterlimit="10"/>
+                                    <circle class="path4" cx="50" cy="50" r="20" fill="none" stroke-width="5" stroke-miterlimit="10"/>
+                                  </svg>
+              -->
+                <div class="portfolio portfolio-coinslist">
+                  <div style="display: none">
+                    <div class="col-sm-6" id="portfolio_chart_current" style="height: 300px;"></div>
+                    <div class="col-sm-6" id="portfolio_chart_target" style="height: 300px;"></div>
+                  </div>
+                  <ul class="dashboard-wallets-list porfolio_coins_list">
+                    <!-- porftolio coins list here -->
+                  </ul>
+                </div>
+             </section>
+          </section>
+          <section class="wallet-wrapper" id="dashboard-exchange" style="display: none">
+             <section class="wallet wallet-ready">
+                <header class="wallet-wallets-header component-header component-header-centered component-header-withBack">
+                   <a class="wallet-wallets-header-back action primary right dark" onClick="displayPortfolio()">
+                      <i class="wallet-wallets-list-item_action">
+                         <svg id="Layer_1" version="1.1" viewBox="0 0 512 512">
+                            <polygon points="160,115.4 180.7,96 352,256 180.7,416 160,396.7 310.5,256"></polygon>
+                         </svg>
+                      </i>
+                   </a>
+                   <!--h2 class="KMD">
+                      <div class="wallet-icon coin-colorized">
+                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 226.8 226.8" width="24" height="24" fill="currentColor">
+                            <path d="M113.4 0C50.8 0 0 50.8 0 113.4s50.8 113.4 113.4 113.4S226.8 176 226.8 113.4 176 0 113.4 0zm54.991 164.274l-3.878 3.878c-17.035 7.13-34.055 14.299-51.113 21.374-17.058-7.074-34.078-14.243-51.113-21.374l-3.878-3.878-21.142-50.879 21.142-50.879 3.878-3.878c11.93-4.994 23.858-9.997 35.792-14.982l9.842-4.12 2.725-1.13 2.754-1.141 2.753 1.141 2.725 1.13 9.842 4.12c11.934 4.985 23.862 9.988 35.792 14.982l3.878 3.878 21.142 50.879-21.141 50.879z"></path>
+                            <path d="M113.4 68.322L81.528 81.524l-13.202 31.871 13.202 31.872 31.872 13.202 31.871-13.202 13.202-31.872-13.202-31.871L113.4 68.322zm22.536 67.61l-22.537 9.336-22.536-9.336-9.335-22.536 9.335-22.536 22.536-9.336 22.537 9.336 9.335 22.536-9.335 22.536z"></path>
+                         </svg>
+                      </div>
+                      <div class="wallet-coinName">Komodo</div>
+                      <div class="wallet-balance">10.87586947 KMD</div>
+                    </h2-->
+                  <div class="balance-controls">
+                    <button class="btn btn-xs btn-warning btn_switch_trading_coin_pairs" style="float: right; margin: -20px 20px;">
+                      <span class="language" data-langstr="exchange_switch_pairs">SWITCH PAIRS</span> <span class="fa fa-random" aria-hidden="true"></span>
+                    </button>
+                    <button class="btn btn-xs btn-warning btn_switch_trading_coin_pairs" style="float: right; margin: -20px 20px;"><span class="language" data-langstr="exchange_switch_pairs"></span> <span class="fa fa-random" aria-hidden="true"></span></button>
+                    <button class="btn btn-xs btn-trading_coin_balance_refresh coinexchange" data-coin="COIN" style="float: right; margin: -20px -8px"><span class="glyphicon glyphicon-refresh"></span></button>
+                    <svg id="balance-spinner">
+                      <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="5" stroke-miterlimit="10"/>
+                      <circle class="path2" cx="50" cy="50" r="20" fill="none" stroke-width="5" stroke-miterlimit="10"/>
+                      <circle class="path3" cx="50" cy="50" r="20" fill="none" stroke-width="5" stroke-miterlimit="10"/>
+                      <circle class="path4" cx="50" cy="50" r="20" fill="none" stroke-width="5" stroke-miterlimit="10"/>
+                    </svg>
+                    <div class="balance-block">
+                      <div class="input-group col-sm-12 your_coins_balance_info" id="coina-controls">
+                        <span class="input-group-addon trading_sellcoin_ticker_name"></span>
+                        <span class="input-group-addon trading_sellcoin_balance"></span>
+                         <a class="wallet-wallets-header-back action primary right dark wallet-balance-action" onClick="enableDetailelViewControls('coina')">
+                            <i class="wallet-wallets-list-item_action fa-chevron-down">
+                            </i>
+                         </a>
+                      </div>
+                      <div class="input-group col-sm-12 your_coins_balance_info" id="coinb-controls">
+                        <span class="input-group-addon trading_coin_ticker_name"></span>
+                        <span class="input-group-addon trading_coin_balance"></span>
+                         <a class="wallet-wallets-header-back action primary right dark wallet-balance-action" onClick="enableDetailelViewControls('coinb')">
+                            <i class="wallet-wallets-list-item_action fa-chevron-down">
+                            </i>
+                         </a>
+                    </div>
+                  </div>
+                </header>
+                <section class="wallet-trade">
+                   <div class="wallet-exchange">
+                      <!-- wallet -->
+                      <div class="trade trade-wallet" id="wallet" style="display: none">
+                        <section class="trade-body">
+                          <ul class="trade-type">
+                             <li class="trade-type-item trade-type-item-buy">
+                                <button>
+                                   <div>
+                                      <i>
+                                         <svg id="Layer_1" version="1.1" viewBox="0 0 512 512">
+                                            <path d="M370.1,181.3H399v47.3l81-83.2L399,64v54h-28.9c-82.7,0-129.4,61.9-170.6,116.5c-37,49.1-69,95.4-120.6,95.4H32v63.3h46.9 c82.7,0,129.4-65.8,170.6-120.4C286.5,223.7,318.4,181.3,370.1,181.3z M153.2,217.5c3.5-4.6,7.1-9.3,10.7-14.1 c8.8-11.6,18-23.9,28-36.1c-29.6-27.9-65.3-48.5-113-48.5H32v63.3c0,0,13.3-0.6,46.9,0C111.4,182.8,131.8,196.2,153.2,217.5z M399,330.4h-28.9c-31.5,0-55.7-15.8-78.2-39.3c-2.2,3-4.5,6-6.8,9c-9.9,13.1-20.5,27.2-32.2,41.1c30.4,29.9,67.2,52.5,117.2,52.5 H399V448l81-81.4l-81-83.2V330.4z"></path>
+                                         </svg>
+                                      </i>
+                                      <small>Exchange</small>
+                                   </div>
+                                </button>
+                             </li>
+                             <li class="trade-type-item trade-type-item-wallet">
+                                <button>
+                                   <div>
+                                      <i>
+                                         <svg id="Layer_1" version="1.1" viewBox="0 0 30 30">
+                                            <path d="M10,4H6C4.895,4,4,4.895,4,6v4c0,1.105,0.895,2,2,2h4c1.105,0,2-0.895,2-2V6C12,4.895,11.105,4,10,4z M10,10H6V6h4V10z M9,9 H7V7h2V9z"></path>
+                                            <path d="M10,18H6c-1.105,0-2,0.895-2,2v4c0,1.105,0.895,2,2,2h4c1.105,0,2-0.895,2-2v-4C12,18.895,11.105,18,10,18z M10,24H6v-4h4 V24z M9,23H7v-2h2V23z"></path>
+                                            <path d="M24,4h-4c-1.105,0-2,0.895-2,2v4c0,1.105,0.895,2,2,2h4c1.105,0,2-0.895,2-2V6C26,4.895,25.105,4,24,4z M24,10h-4V6h4V10z M23,9h-2V7h2V9z"></path>
+                                            <rect height="2" width="2" x="14" y="6"></rect>
+                                            <rect height="2" width="2" x="14" y="10"></rect>
+                                            <rect height="2" width="2" x="14" y="14"></rect>
+                                            <rect height="2" width="2" x="10" y="14"></rect>
+                                            <rect height="2" width="2" x="6" y="14"></rect>
+                                            <rect height="2" width="2" x="18" y="14"></rect>
+                                            <rect height="2" width="2" x="22" y="14"></rect>
+                                            <rect height="2" width="2" x="16" y="16"></rect>
+                                            <rect height="2" width="2" x="20" y="16"></rect>
+                                            <rect height="2" width="2" x="18" y="18"></rect>
+                                            <rect height="2" width="2" x="14" y="18"></rect>
+                                            <rect height="2" width="2" x="16" y="20"></rect>
+                                            <rect height="2" width="2" x="18" y="22"></rect>
+                                            <rect height="2" width="2" x="16" y="24"></rect>
+                                            <rect height="2" width="2" x="24" y="16"></rect>
+                                            <rect height="2" width="2" x="24" y="20"></rect>
+                                            <rect height="2" width="2" x="20" y="20"></rect>
+                                            <rect height="2" width="2" x="20" y="24"></rect>
+                                            <rect height="2" width="2" x="22" y="22"></rect>
+                                            <rect height="2" width="2" x="22" y="18"></rect>
+                                            <rect height="2" width="2" x="14" y="22"></rect>
+                                         </svg>
+                                      </i>
+                                      <small>Wallet</small>
+                                   </div>
+                                </button>
+                             </li>
+                             <li class="trade-type-item trade-type-item-orders">
+                                <button>
+                                   <div>
+                                      <i>
+                                         <svg id="Layer_1" version="1.1" viewBox="0 0 30 30">
+                                            <path d="M7,22 V4h18v18c0,2.209-1.791,4-4,4" style="fill: none; stroke: rgb(255, 255, 255); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; stroke-miterlimit: 10;"></path>
+                                            <path d="M17,22 L17,22H4l0,0c0,2.209,1.791,4,4,4h13C18.791,26,17,24.209,17,22z" style="fill: none; stroke: rgb(255, 255, 255); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; stroke-miterlimit: 10;"></path>
+                                            <line x1="15" x2="21" y1="13" y2="13" style="fill: none; stroke: rgb(255, 255, 255); stroke-width: 2; stroke-linejoin: round; stroke-miterlimit: 10;"></line>
+                                            <line x1="11" x2="13" y1="13" y2="13" style="fill: none; stroke: rgb(255, 255, 255); stroke-width: 2; stroke-linejoin: round; stroke-miterlimit: 10;"></line>
+                                            <line x1="15" x2="21" y1="17" y2="17" style="fill: none; stroke: rgb(255, 255, 255); stroke-width: 2; stroke-linejoin: round; stroke-miterlimit: 10;"></line>
+                                            <line x1="11" x2="13" y1="17" y2="17" style="fill: none; stroke: rgb(255, 255, 255); stroke-width: 2; stroke-linejoin: round; stroke-miterlimit: 10;"></line>
+                                            <line x1="15" x2="21" y1="9" y2="9" style="fill: none; stroke: rgb(255, 255, 255); stroke-width: 2; stroke-linejoin: round; stroke-miterlimit: 10;"></line>
+                                            <line x1="11" x2="13" y1="9" y2="9" style="fill: none; stroke: rgb(255, 255, 255); stroke-width: 2; stroke-linejoin: round; stroke-miterlimit: 10;"></line>
+                                            <path d="M17,22L17,22H4l0,0c0,2.209,1.791,4,4,4h13C18.791,26,17,24.209,17,22z"></path>
+                                         </svg>
+                                      </i>
+                                      <small>Orders</small>
+                                   </div>
+                                </button>
+                             </li>
+                          </ul>
+                          <section class="balance-action">
+                             <section class="balance-deposit">
+                                <div class="balance-deposit-body KMD">
+                                   <section class="balance-qr">
+                                      <canvas height="124" width="124" style="height: 124px; width: 124px;"></canvas>
+                                   </section>
+                                   <section class="balance-deposit-address">
+                                      <span class="label"><strong class="label-title">Your smartaddress</strong></span>
+                                      <button class="Clipboard action lefttext normaltext dark">
+                                         <span>RDbGxL8QYdEp8sMULaVZS2E6XThcTKT9Jd</span>
+                                         <i class="Clipboard-icon">
+                                            <svg id="Layer_1" version="1.1" viewBox="0 0 512 512">
+                                               <g>
+                                                  <polygon points="304,96 288,96 288,176 368,176 368,160 304,160 "></polygon>
+                                                  <path d="M325.3,64H160v48h-48v336h240v-48h48V139L325.3,64z M336,432H128V128h32v272h176V432z M384,384H176V80h142.7l65.3,65.6V384 z"></path>
+                                               </g>
+                                            </svg>
+                                         </i>
+                                      </button>
+                                   </section>
+                                </div>
+                             </section>
+                             <div class="deposit-withdraw">
+                                <section class="trade-amount_input_address">
+                                   <span class="label"><strong class="label-title">Withdraw to</strong></span>
+                                   <div class="trade-amount_input-wrapper"><input type="text" name="form-amount" placeholder="address" value="" style="font-size: 18px;"></div>
+                                </section>
+                                <section class="trade-amount_input_amount">
+                                   <span class="label"><strong class="label-title">Amount</strong></span>
+                                   <div class="trade-amount_input-wrapper"><input type="number" step="any" min="0" name="form-amount" placeholder="0.00" value="0" style="font-size: 18px;"><button class="trade-setMax">Max</button></div>
+                                </section>
+                                <section class="trade-button-wrapper KMD">
+                                   <button class="trade-button withBorder action primary coin-bg">
+                                      <div class="trade-action-amountRel">
+                                         <small class="trade-action-amountRel-title">VALIDATION</small><!-- react-text: 153 -->enter amount to continue<!-- /react-text -->
+                                      </div>
+                                      <i>
+                                         <svg id="Layer_1" version="1.1" viewBox="0 0 30 30">
+                                            <polygon points="28,15 18,15 5.338,12.885 4,11 4,5 6.994,3.266 27.391,14.079 "></polygon>
+                                            <circle cx="27" cy="15" r="1"></circle>
+                                            <circle cx="6" cy="11" r="2"></circle>
+                                            <circle cx="6" cy="5" r="2"></circle>
+                                            <polygon points="28,15 18,15 5.338,17.115 4,19 4,25 6.994,26.734 27.391,15.921 "></polygon>
+                                            <circle cx="6" cy="19" r="2"></circle>
+                                            <circle cx="6" cy="25" r="2"></circle>
+                                         </svg>
+                                      </i>
+                                   </button>
+                                </section>
+                             </div>
+                          </section>
+                        </section>
+                      </div>
+                      <!-- exchange -->
+                      <div class="trade trade-buy" id="exchange-coins">
+                         <section class="trade-body">
+                            <ul class="trade-type">
+                                <li class="trade-type-item trade-type-item-buy">
+                                  <button>
+                                     <div>
+                                        <i>
+                                           <svg id="Layer_1" version="1.1" viewBox="0 0 512 512">
+                                              <path d="M370.1,181.3H399v47.3l81-83.2L399,64v54h-28.9c-82.7,0-129.4,61.9-170.6,116.5c-37,49.1-69,95.4-120.6,95.4H32v63.3h46.9 c82.7,0,129.4-65.8,170.6-120.4C286.5,223.7,318.4,181.3,370.1,181.3z M153.2,217.5c3.5-4.6,7.1-9.3,10.7-14.1 c8.8-11.6,18-23.9,28-36.1c-29.6-27.9-65.3-48.5-113-48.5H32v63.3c0,0,13.3-0.6,46.9,0C111.4,182.8,131.8,196.2,153.2,217.5z M399,330.4h-28.9c-31.5,0-55.7-15.8-78.2-39.3c-2.2,3-4.5,6-6.8,9c-9.9,13.1-20.5,27.2-32.2,41.1c30.4,29.9,67.2,52.5,117.2,52.5 H399V448l81-81.4l-81-83.2V330.4z"></path>
+                                           </svg>
+                                        </i>
+                                        <small>Exchange</small>
+                                     </div>
+                                  </button>
+                               </li>
+                               <!--li class="trade-type-item trade-type-item-wallet">
+                                  <button>
+                                     <div>
+                                        <i>
+                                           <svg id="Layer_1" version="1.1" viewBox="0 0 30 30">
+                                              <path d="M10,4H6C4.895,4,4,4.895,4,6v4c0,1.105,0.895,2,2,2h4c1.105,0,2-0.895,2-2V6C12,4.895,11.105,4,10,4z M10,10H6V6h4V10z M9,9 H7V7h2V9z"></path>
+                                              <path d="M10,18H6c-1.105,0-2,0.895-2,2v4c0,1.105,0.895,2,2,2h4c1.105,0,2-0.895,2-2v-4C12,18.895,11.105,18,10,18z M10,24H6v-4h4 V24z M9,23H7v-2h2V23z"></path>
+                                              <path d="M24,4h-4c-1.105,0-2,0.895-2,2v4c0,1.105,0.895,2,2,2h4c1.105,0,2-0.895,2-2V6C26,4.895,25.105,4,24,4z M24,10h-4V6h4V10z M23,9h-2V7h2V9z"></path>
+                                              <rect height="2" width="2" x="14" y="6"></rect>
+                                              <rect height="2" width="2" x="14" y="10"></rect>
+                                              <rect height="2" width="2" x="14" y="14"></rect>
+                                              <rect height="2" width="2" x="10" y="14"></rect>
+                                              <rect height="2" width="2" x="6" y="14"></rect>
+                                              <rect height="2" width="2" x="18" y="14"></rect>
+                                              <rect height="2" width="2" x="22" y="14"></rect>
+                                              <rect height="2" width="2" x="16" y="16"></rect>
+                                              <rect height="2" width="2" x="20" y="16"></rect>
+                                              <rect height="2" width="2" x="18" y="18"></rect>
+                                              <rect height="2" width="2" x="14" y="18"></rect>
+                                              <rect height="2" width="2" x="16" y="20"></rect>
+                                              <rect height="2" width="2" x="18" y="22"></rect>
+                                              <rect height="2" width="2" x="16" y="24"></rect>
+                                              <rect height="2" width="2" x="24" y="16"></rect>
+                                              <rect height="2" width="2" x="24" y="20"></rect>
+                                              <rect height="2" width="2" x="20" y="20"></rect>
+                                              <rect height="2" width="2" x="20" y="24"></rect>
+                                              <rect height="2" width="2" x="22" y="22"></rect>
+                                              <rect height="2" width="2" x="22" y="18"></rect>
+                                              <rect height="2" width="2" x="14" y="22"></rect>
+                                           </svg>
+                                        </i>
+                                        <small>Wallet</small>
+                                     </div>
+                                  </button>
+                               </li-->
+                               <li class="trade-type-item trade-type-item-orders">
+                                  <button>
+                                     <div>
+                                        <i>
+                                           <svg id="Layer_1" version="1.1" viewBox="0 0 30 30">
+                                              <path d="M7,22 V4h18v18c0,2.209-1.791,4-4,4" style="fill: none; stroke: rgb(255, 255, 255); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; stroke-miterlimit: 10;"></path>
+                                              <path d="M17,22 L17,22H4l0,0c0,2.209,1.791,4,4,4h13C18.791,26,17,24.209,17,22z" style="fill: none; stroke: rgb(255, 255, 255); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; stroke-miterlimit: 10;"></path>
+                                              <line x1="15" x2="21" y1="13" y2="13" style="fill: none; stroke: rgb(255, 255, 255); stroke-width: 2; stroke-linejoin: round; stroke-miterlimit: 10;"></line>
+                                              <line x1="11" x2="13" y1="13" y2="13" style="fill: none; stroke: rgb(255, 255, 255); stroke-width: 2; stroke-linejoin: round; stroke-miterlimit: 10;"></line>
+                                              <line x1="15" x2="21" y1="17" y2="17" style="fill: none; stroke: rgb(255, 255, 255); stroke-width: 2; stroke-linejoin: round; stroke-miterlimit: 10;"></line>
+                                              <line x1="11" x2="13" y1="17" y2="17" style="fill: none; stroke: rgb(255, 255, 255); stroke-width: 2; stroke-linejoin: round; stroke-miterlimit: 10;"></line>
+                                              <line x1="15" x2="21" y1="9" y2="9" style="fill: none; stroke: rgb(255, 255, 255); stroke-width: 2; stroke-linejoin: round; stroke-miterlimit: 10;"></line>
+                                              <line x1="11" x2="13" y1="9" y2="9" style="fill: none; stroke: rgb(255, 255, 255); stroke-width: 2; stroke-linejoin: round; stroke-miterlimit: 10;"></line>
+                                              <path d="M17,22L17,22H4l0,0c0,2.209,1.791,4,4,4h13C18.791,26,17,24.209,17,22z"></path>
+                                           </svg>
+                                        </i>
+                                        <small>My Orders</small>
+                                     </div>
+                                  </button>
+                               </li>
+                            </ul>
+                            <section class="trade">
+                        <div class="form-group trading_buysell_options">
+                          <div class="btn-group btn-group-justified colors" data-toggle="buttons">
+                            <label class="btn btn-info active">
+                              <input type="radio" name="trading_pair_options" id="trading_pair_options_buying" value="buying" autocomplete="off" checked> <span class="language" data-langstr="exchange_btn_buy_caps"></span> <span class="coin_ticker"></span></label>
+                            <label class="btn btn-info">
+                              <input type="radio" name="trading_pair_options" id="trading_pair_options_selling" value="selling" autocomplete="off"> <span class="language" data-langstr="exchange_btn_sell_caps"></span> <span class="coin_ticker"></span></label>
+                          </div>
+                        </div>
+                              <div style="margin-bottom: 10px">
+                                <span style="float: left; font-size: 18px;"><span class="trading_pair_lable_text_one language" data-langstr="exchange_lbl_one_max"></span> <span class="language" data-langstr="exchange_lbl_one_price_to"></span> <span class="trading_pair_lable_text_two language" data-langstr="exchange_lbl_buy_small"></span></span>
+                              </div>
+                              <select class="selectpicker trading_pair_coin" data-live-search="true" data-hide-disabled="true" data-width="30%"></select>
+                              <span class="input-group-addon trading_pair_coin_autoprice_mode_span" style="font-size: 0px; margin: 0; padding: 0; width: 120px; background-color: #fff; border: 0;">
+                                <div class="checkbox" style="margin: 0;">
+                                  <input class="toggle_checkbox toggle_font_lg" id="trading_pair_coin_autoprice_mode" type="checkbox" checked data-toggle="toggle" data-on="Margin" data-off="Fixed" data-onstyle="primary" data-offstyle="info" data-width="100%" data-height="44px" data-class="toggle-font-lg">
+                                </div>
+                              </span>
+                              <input type="number" class="form-control trading_pair_coin_price" data-langstr="exchange_trading_pair_coin_price_input_placeholder" placeholder="" style="height: 44px; font-size: 20px;">
+                              <!--span class="input-group-addon language" data-langstr="exchange_coin_price_max" id="trading_pair_coin_price_max_min" style="font-size: 20px;"></span-->
+                              <div class="form-group buy_sell_amount_to" style="margin-top: 25px; margin-bottom: 10px;">
+                                <span style="font-size: 18px;"><span class="language" data-langstr="exchange_lbl_two_max"></span> <span class="language" data-langstr="exchange_lbl_amount_to"></span> <span class="trading_pair_lable_text_two language" data-langstr="exchange_lbl_buy_small"></span></span>
+                              </div>
+                              <div class="input-group">
+                                <p class="portfolio_info_text" style="font-size: 120%; font-weight: 200;"></p>
+                              </div>
+                                <select class="selectpicker trading_pair_coin2" data-live-search="true" data-hide-disabled="true" data-width="30%"></select>
+                                <input type="number" class="form-control trading_pair_coin_volume" data-langstr="exchange_trading_pair_coin_volume_input_placeholder" placeholder="" style="height: 44px; font-size: 20px;">
+                                <!--span class="input-group-btn">
+                                  <button class="btn btn-primary btn-bot_action language" data-action="buy" style="height: 44px; font-size: 20px;" data-langstr="exchange_btn_buy_caps"></button>
+                                </span-->
+                               <section class="trade-button-wrapper KMD">
+                                  <button class="trade-button withBorder action primary coin-bg btn-bot_action-trigger" data-action="buy">
+                                     <div class="trade-action-amountRel">
+                                        <small class="trade-action-amountRel-title btn-bot_action language" data-langstr="exchange_btn_buy_caps"></small>
+                                        <div>
+                                          <span class="relvol_basevol_amount">
+                                            <span class="relvol_basevol">0</span> <span class="relvol_basevol_coin"></span>
+                                          </span>
+                                        </div>
+                                     </div>
+                                     <i>
+                                        <svg id="Layer_1" version="1.1" viewBox="0 0 512 512">
+                                           <path d="M370.1,181.3H399v47.3l81-83.2L399,64v54h-28.9c-82.7,0-129.4,61.9-170.6,116.5c-37,49.1-69,95.4-120.6,95.4H32v63.3h46.9 c82.7,0,129.4-65.8,170.6-120.4C286.5,223.7,318.4,181.3,370.1,181.3z M153.2,217.5c3.5-4.6,7.1-9.3,10.7-14.1 c8.8-11.6,18-23.9,28-36.1c-29.6-27.9-65.3-48.5-113-48.5H32v63.3c0,0,13.3-0.6,46.9,0C111.4,182.8,131.8,196.2,153.2,217.5z M399,330.4h-28.9c-31.5,0-55.7-15.8-78.2-39.3c-2.2,3-4.5,6-6.8,9c-9.9,13.1-20.5,27.2-32.2,41.1c30.4,29.9,67.2,52.5,117.2,52.5 H399V448l81-81.4l-81-83.2V330.4z"></path>
+                                        </svg>
+                                     </i>
+                                  </button>
+                               </section>
+                              <div class="input-group buy_sell_button_div">
+                                <!--<span class="input-group-addon coin_ticker" id="trading_pair_coin_ticker" style="font-size: 20px;"></span>-->
+                              </div>
+                            </section>
+                            <!--section class="trade-action">
+                               <section class="trade-action-wrapper">
+                                  <div class="trade-amount">
+                                     <section class="trade-amount_input">
+                                        <section class="trade-amount_input_price">
+                                           <span class="label"><strong class="label-title">Price</strong></span>
+                                           <div class="trade-amount_input-wrapper">
+                                              <input type="number" step="any" min="0" name="form-price" placeholder="0.00" value="0" style="font-size: 18px;">
+                                              <section class="modal modal-open">
+                                                 <header class="modal-header">
+                                                    <h1></h1>
+                                                    <button class="modal-btn-close withBorder">
+                                                       <i class="modal-btn-close-icon">
+                                                          <svg id="Layer_1" version="1.1" viewBox="0 0 32 32">
+                                                             <g>
+                                                                <polyline fill="none" points=" 649,137.999 675,137.999 675,155.999 661,155.999 " stroke="#FFFFFF" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="2"></polyline>
+                                                                <polyline fill="none" points=" 653,155.999 649,155.999 649,141.999 " stroke="#FFFFFF" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="2"></polyline>
+                                                                <polyline fill="none" points=" 661,156 653,162 653,156 " stroke="#FFFFFF" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="2"></polyline>
+                                                             </g>
+                                                             <g>
+                                                                <path d="M11.312,12.766c0.194,0.195,0.449,0.292,0.704,0.292c0.255,0,0.51-0.097,0.704-0.292c0.389-0.389,0.389-1.02,0-1.409 L4.755,3.384c-0.389-0.389-1.019-0.389-1.408,0s-0.389,1.02,0,1.409L11.312,12.766z"></path>
+                                                                <path d="M17.407,16.048L28.652,4.793c0.389-0.389,0.389-1.02,0-1.409c-0.389-0.389-1.019-0.561-1.408-0.171L15.296,15 c0,0-0.296,0-0.296,0s0,0.345,0,0.345L3.2,27.303c-0.389,0.389-0.315,1.02,0.073,1.409c0.194,0.195,0.486,0.292,0.741,0.292 s0.528-0.097,0.722-0.292L15.99,17.458l11.249,11.255c0.194,0.195,0.452,0.292,0.706,0.292s0.511-0.097,0.705-0.292 c0.389-0.389,0.39-1.02,0.001-1.409L17.407,16.048z"></path>
+                                                             </g>
+                                                          </svg>
+                                                       </i>
+                                                    </button>
+                                                 </header>
+                                                 <content class="modal-content">
+                                                    <button class="action noTransformTranslate arrow-down">
+                                                       <span class="MNZ">
+                                                          <span class="trade-base-icon coin-colorized">
+                                                             <i class="coin-icon-svg MNZ">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" version="1.1" id="Calque_1" x="0px" y="0px" viewBox="0 0 50 50">
+                                                                   <g>
+                                                                      <path class="st1" d="M15.9,17.9"></path>
+                                                                      <path d="M39.9,34.5c-0.2-1.2-0.6-2.4-0.9-3.5c-0.3-1.2-0.6-2.4-0.9-3.6c-0.8-3-1.6-6-2.4-9c-0.2-0.7-0.3-1.4-0.5-2.1 c-0.1-0.3-0.2-0.7-0.5-0.9c-0.3-0.1-0.6-0.1-0.9-0.1c-0.4,0-0.8,0-1.2,0c-0.8,0-1.7,0-2.5,0c-0.6,0-1.1,0-1.7,0.1 c-0.5,0.1-1,0.4-1.2,0.9c-0.1,0.2,0,0.5,0.2,0.6c0.1,0.1,0.3,0,0.4-0.1c0.1,0,0.4-0.3,0.5-0.3l4.7,17.3l0,0c0,0,0,0.1,0,0.1 c0.1,0.4,0.3,0.8,0.6,0.9c0.2,0.1,0.4,0.2,0.7,0.2h0.5h0.8h2.4h1.3C39.6,35.1,40,34.9,39.9,34.5z"></path>
+                                                                      <path d="M28.3,34.5c-0.2-1.2-0.6-2.4-0.9-3.5c-0.3-1.2-0.6-2.4-0.9-3.6c-0.8-3-1.6-6-2.4-9c-0.2-0.7-0.3-1.4-0.5-2.1 c-0.1-0.3-0.2-0.7-0.5-0.9c-0.3-0.1-0.6-0.1-0.9-0.1c-0.4,0-0.8,0-1.2,0c-0.8,0-1.7,0-2.5,0c-0.6,0-1.1,0-1.7,0.1 c-0.5,0.1-1,0.4-1.2,0.9c-0.1,0.2,0,0.5,0.2,0.6c0.1,0.1,0.3,0,0.4-0.1c0.1,0,0.4-0.3,0.5-0.3l4.7,17.3l0,0c0,0,0,0.1,0,0.1 c0.1,0.4,0.3,0.8,0.6,0.9c0.2,0.1,0.4,0.2,0.7,0.2h0.5h0.8h2.4h1.3C28,35.1,28.4,34.9,28.3,34.5z"></path>
+                                                                      <path d="M19.1,30.7l-3.2-12.5h0c0-0.2-0.2-0.4-0.5-0.4c-0.2,0-0.4,0.2-0.5,0.4l0,0L10.7,34l0,0c0,0.1,0,0.2,0,0.2 c0,0.5,0.4,1,1,1H17c0.4,0,0.8-0.3,0.9-0.7l0,0L19.1,30.7z"></path>
+                                                                      <path d="M30.9,30.4l-3.5-12.6h0c0-0.2-0.2-0.3-0.4-0.3c-0.2,0-0.4,0.1-0.4,0.3h0l-0.7,2.5l3.5,12.2l0,0l0,0 c0.1,0.2,0.2,0.3,0.4,0.3c0.2,0,0.3-0.1,0.4-0.3l0,0L30.9,30.4z"></path>
+                                                                   </g>
+                                                                </svg>
+                                                             </i>
+                                                          </span>
+                                                          <strong>Monaize</strong>
+                                                       </span>
+                                                       <i>
+                                                          <svg id="Layer_1" version="1.1" viewBox="0 0 512 512">
+                                                             <polygon points="160,115.4 180.7,96 352,256 180.7,416 160,396.7 310.5,256 "></polygon>
+                                                          </svg>
+                                                       </i>
+                                                    </button>
+                                                    <div class="modal-content-overlay">
+                                                       <ul class="coinList-list singleColumn coin-colorized-reset">
+                                                          <li class="coinList-coin MNZ">
+                                                             <div class="coinList-coin_icon coin-colorized">
+                                                                <i class="coin-icon-svg MNZ">
+                                                                   <svg xmlns="http://www.w3.org/2000/svg" version="1.1" id="Calque_1" x="0px" y="0px" viewBox="0 0 50 50">
+                                                                      <g>
+                                                                         <path class="st1" d="M15.9,17.9"></path>
+                                                                         <path d="M39.9,34.5c-0.2-1.2-0.6-2.4-0.9-3.5c-0.3-1.2-0.6-2.4-0.9-3.6c-0.8-3-1.6-6-2.4-9c-0.2-0.7-0.3-1.4-0.5-2.1 c-0.1-0.3-0.2-0.7-0.5-0.9c-0.3-0.1-0.6-0.1-0.9-0.1c-0.4,0-0.8,0-1.2,0c-0.8,0-1.7,0-2.5,0c-0.6,0-1.1,0-1.7,0.1 c-0.5,0.1-1,0.4-1.2,0.9c-0.1,0.2,0,0.5,0.2,0.6c0.1,0.1,0.3,0,0.4-0.1c0.1,0,0.4-0.3,0.5-0.3l4.7,17.3l0,0c0,0,0,0.1,0,0.1 c0.1,0.4,0.3,0.8,0.6,0.9c0.2,0.1,0.4,0.2,0.7,0.2h0.5h0.8h2.4h1.3C39.6,35.1,40,34.9,39.9,34.5z"></path>
+                                                                         <path d="M28.3,34.5c-0.2-1.2-0.6-2.4-0.9-3.5c-0.3-1.2-0.6-2.4-0.9-3.6c-0.8-3-1.6-6-2.4-9c-0.2-0.7-0.3-1.4-0.5-2.1 c-0.1-0.3-0.2-0.7-0.5-0.9c-0.3-0.1-0.6-0.1-0.9-0.1c-0.4,0-0.8,0-1.2,0c-0.8,0-1.7,0-2.5,0c-0.6,0-1.1,0-1.7,0.1 c-0.5,0.1-1,0.4-1.2,0.9c-0.1,0.2,0,0.5,0.2,0.6c0.1,0.1,0.3,0,0.4-0.1c0.1,0,0.4-0.3,0.5-0.3l4.7,17.3l0,0c0,0,0,0.1,0,0.1 c0.1,0.4,0.3,0.8,0.6,0.9c0.2,0.1,0.4,0.2,0.7,0.2h0.5h0.8h2.4h1.3C28,35.1,28.4,34.9,28.3,34.5z"></path>
+                                                                         <path d="M19.1,30.7l-3.2-12.5h0c0-0.2-0.2-0.4-0.5-0.4c-0.2,0-0.4,0.2-0.5,0.4l0,0L10.7,34l0,0c0,0.1,0,0.2,0,0.2 c0,0.5,0.4,1,1,1H17c0.4,0,0.8-0.3,0.9-0.7l0,0L19.1,30.7z"></path>
+                                                                         <path d="M30.9,30.4l-3.5-12.6h0c0-0.2-0.2-0.3-0.4-0.3c-0.2,0-0.4,0.1-0.4,0.3h0l-0.7,2.5l3.5,12.2l0,0l0,0 c0.1,0.2,0.2,0.3,0.4,0.3c0.2,0,0.3-0.1,0.4-0.3l0,0L30.9,30.4z"></path>
+                                                                      </g>
+                                                                   </svg>
+                                                                </i>
+                                                             </div>
+                                                             <div class="coinList-coin_balance"><strong class="coinList-coin_name">Monaize</strong><small>20.35808051 MNZ</small></div>
+                                                             <span class="coinList-coin_action">
+                                                                <svg id="Layer_1" version="1.1" viewBox="0 0 512 512">
+                                                                   <polygon points="160,115.4 180.7,96 352,256 180.7,416 160,396.7 310.5,256 "></polygon>
+                                                                </svg>
+                                                             </span>
+                                                             <span class="coinList-coin_action_loader">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid" class="lds-flickr" style="background: none;">
+                                                                   <circle cy="50" cx="37.3333" fill="#FFF" r="20">
+                                                                      <animate attributeName="cx" calcMode="linear" values="30;70;30" keyTimes="0;0.5;1" dur="2" begin="-1s" repeatCount="indefinite"></animate>
+                                                                   </circle>
+                                                                   <circle cy="50" cx="62.6667" fill="#000" r="20">
+                                                                      <animate attributeName="cx" calcMode="linear" values="30;70;30" keyTimes="0;0.5;1" dur="2" begin="0s" repeatCount="indefinite"></animate>
+                                                                   </circle>
+                                                                   <circle cy="50" cx="37.3333" fill="#FFF" r="20">
+                                                                      <animate attributeName="cx" calcMode="linear" values="30;70;30" keyTimes="0;0.5;1" dur="2" begin="-1s" repeatCount="indefinite"></animate>
+                                                                      <animate attributeName="fill-opacity" values="0;0;1;1" calcMode="discrete" keyTimes="0;0.499;0.5;1" repeatCount="indefinite" dur="2s"></animate>
+                                                                   </circle>
+                                                                </svg>
+                                                             </span>
+                                                          </li>
+                                                          <li class="coinList-coin REVS">
+                                                             <div class="coinList-coin_icon coin-colorized"><i class="coin-icon-placeholder REVS">R</i></div>
+                                                             <div class="coinList-coin_balance"><strong class="coinList-coin_name">REVS</strong><small>1.29442594 REVS</small></div>
+                                                             <span class="coinList-coin_action">
+                                                                <svg id="Layer_1" version="1.1" viewBox="0 0 512 512">
+                                                                   <polygon points="160,115.4 180.7,96 352,256 180.7,416 160,396.7 310.5,256 "></polygon>
+                                                                </svg>
+                                                             </span>
+                                                             <span class="coinList-coin_action_loader">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid" class="lds-flickr" style="background: none;">
+                                                                   <circle cy="50" cx="37.3333" fill="#FFF" r="20">
+                                                                      <animate attributeName="cx" calcMode="linear" values="30;70;30" keyTimes="0;0.5;1" dur="2" begin="-1s" repeatCount="indefinite"></animate>
+                                                                   </circle>
+                                                                   <circle cy="50" cx="62.6667" fill="#000" r="20">
+                                                                      <animate attributeName="cx" calcMode="linear" values="30;70;30" keyTimes="0;0.5;1" dur="2" begin="0s" repeatCount="indefinite"></animate>
+                                                                   </circle>
+                                                                   <circle cy="50" cx="37.3333" fill="#FFF" r="20">
+                                                                      <animate attributeName="cx" calcMode="linear" values="30;70;30" keyTimes="0;0.5;1" dur="2" begin="-1s" repeatCount="indefinite"></animate>
+                                                                      <animate attributeName="fill-opacity" values="0;0;1;1" calcMode="discrete" keyTimes="0;0.499;0.5;1" repeatCount="indefinite" dur="2s"></animate>
+                                                                   </circle>
+                                                                </svg>
+                                                             </span>
+                                                          </li>
+                                                          <li class="coinList-coin JUMBLR">
+                                                             <div class="coinList-coin_icon coin-colorized"><i class="coin-icon-placeholder JUMBLR">J</i></div>
+                                                             <div class="coinList-coin_balance"><strong class="coinList-coin_name">JUMBLR</strong><small>0.00 JUMBLR</small></div>
+                                                             <span class="coinList-coin_action">
+                                                                <svg id="Layer_1" version="1.1" viewBox="0 0 512 512">
+                                                                   <polygon points="160,115.4 180.7,96 352,256 180.7,416 160,396.7 310.5,256 "></polygon>
+                                                                </svg>
+                                                             </span>
+                                                             <span class="coinList-coin_action_loader">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid" class="lds-flickr" style="background: none;">
+                                                                   <circle cy="50" cx="37.3333" fill="#FFF" r="20">
+                                                                      <animate attributeName="cx" calcMode="linear" values="30;70;30" keyTimes="0;0.5;1" dur="2" begin="-1s" repeatCount="indefinite"></animate>
+                                                                   </circle>
+                                                                   <circle cy="50" cx="62.6667" fill="#000" r="20">
+                                                                      <animate attributeName="cx" calcMode="linear" values="30;70;30" keyTimes="0;0.5;1" dur="2" begin="0s" repeatCount="indefinite"></animate>
+                                                                   </circle>
+                                                                   <circle cy="50" cx="37.3333" fill="#FFF" r="20">
+                                                                      <animate attributeName="cx" calcMode="linear" values="30;70;30" keyTimes="0;0.5;1" dur="2" begin="-1s" repeatCount="indefinite"></animate>
+                                                                      <animate attributeName="fill-opacity" values="0;0;1;1" calcMode="discrete" keyTimes="0;0.499;0.5;1" repeatCount="indefinite" dur="2s"></animate>
+                                                                   </circle>
+                                                                </svg>
+                                                             </span>
+                                                          </li>
+                                                          <li class="coinList-coin BTC">
+                                                             <div class="coinList-coin_icon coin-colorized">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 226.777 226.777" fill="currentColor">
+                                                                   <path d="M135.715 122.244c-2.614-1.31-8.437-3.074-15.368-3.533-6.934-.458-15.828 0-15.828 0v30.02s9.287.198 15.503-.26c6.21-.458 12.621-2.027 15.826-3.795 3.203-1.766 7.063-4.513 7.063-11.379 0-6.869-4.579-9.745-7.196-11.053zm-19.555-17.465c5.104-.197 10.532-1.373 14.453-3.532 3.925-2.158 6.148-5.557 6.02-10.66-.134-5.102-3.532-9.418-9.287-11.186-5.757-1.766-9.613-1.897-13.998-1.962-4.382-.064-8.83.328-8.83.328v27.012c.001 0 6.541.197 11.642 0z"></path>
+                                                                   <path d="M113.413 0C50.777 0 0 50.776 0 113.413c0 62.636 50.777 113.413 113.413 113.413s113.411-50.777 113.411-113.413C226.824 50.776 176.049 0 113.413 0zm46.178 156.777c-8.44 5.887-17.465 6.935-21.455 7.456-1.969.259-5.342.532-8.959.744v22.738h-13.998v-22.37h-10.66v22.37H90.522v-22.37H62.987l2.877-16.812h8.371c2.814 0 3.989-.261 5.166-1.372 1.177-1.113 1.439-2.812 1.439-4.188V85.057c0-3.628-.295-4.61-1.963-6.473-1.668-1.867-5.591-2.112-7.8-2.112h-8.091V61.939h27.535V39.505h13.996v22.434h10.66V39.505h13.998v22.703c10.435.647 18.203 2.635 24.983 7.645 8.766 6.475 8.306 17.724 8.11 20.406-.195 2.682-1.372 7.85-3.729 11.183-2.352 3.337-8.108 6.673-8.108 6.673s6.801 1.438 11.578 5.036c4.771 3.598 8.307 9.941 8.106 19.229-.192 9.288-2.088 18.511-10.524 24.397z"></path>
+                                                                </svg>
+                                                             </div>
+                                                             <div class="coinList-coin_balance"><strong class="coinList-coin_name">Bitcoin</strong><small>0.002 BTC</small></div>
+                                                             <span class="coinList-coin_action">
+                                                                <svg id="Layer_1" version="1.1" viewBox="0 0 512 512">
+                                                                   <polygon points="160,115.4 180.7,96 352,256 180.7,416 160,396.7 310.5,256 "></polygon>
+                                                                </svg>
+                                                             </span>
+                                                             <span class="coinList-coin_action_loader">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid" class="lds-flickr" style="background: none;">
+                                                                   <circle cy="50" cx="37.3333" fill="#FFF" r="20">
+                                                                      <animate attributeName="cx" calcMode="linear" values="30;70;30" keyTimes="0;0.5;1" dur="2" begin="-1s" repeatCount="indefinite"></animate>
+                                                                   </circle>
+                                                                   <circle cy="50" cx="62.6667" fill="#000" r="20">
+                                                                      <animate attributeName="cx" calcMode="linear" values="30;70;30" keyTimes="0;0.5;1" dur="2" begin="0s" repeatCount="indefinite"></animate>
+                                                                   </circle>
+                                                                   <circle cy="50" cx="37.3333" fill="#FFF" r="20">
+                                                                      <animate attributeName="cx" calcMode="linear" values="30;70;30" keyTimes="0;0.5;1" dur="2" begin="-1s" repeatCount="indefinite"></animate>
+                                                                      <animate attributeName="fill-opacity" values="0;0;1;1" calcMode="discrete" keyTimes="0;0.499;0.5;1" repeatCount="indefinite" dur="2s"></animate>
+                                                                   </circle>
+                                                                </svg>
+                                                             </span>
+                                                          </li>
+                                                       </ul>
+                                                    </div>
+                                                 </content>
+                                              </section>
+                                           </div>
+                                        </section>
+                                        <section class="trade-amount_input_amount">
+                                           <span class="label"><strong class="label-title">Amount</strong></span>
+                                           <div class="trade-amount_input-wrapper"><input type="number" step="any" min="0" name="form-amount" placeholder="0.00" value="0" style="font-size: 18px;"></div>
+                                        </section>
+                                     </section>
+                                  </div>
+                               </section>
+                            </section-->
+                         </section>
+                      </div>
+                   </div>
+                </section>
+             </section>
+             <section class="wallet-orderbooks">
+                 <section class="myswaps-block">
+                    <ul class="orders-list singleColumn noHover prices" id="myswaps">
+                    </ul>
+                 </section>
+                <!--section class="wallet-orderbooks-chart">
+                   <h3>no chart data</h3>
+                </section-->
+                <section class="trade-orderbook">
+                  <div class="orderbook_numasks"></div>
+                   <div class="ReactTable -striped -highlight orderbook-asks">
+                      <div class="rt-table">
+                         <div class="rt-thead -header" style="min-width: 600px;">
+                            <div class="rt-tr">
+                               <div class=" rt-resizable-header -sort-asc -cursor-pointer rt-th" style="flex: 100 0 auto; width: 100px;">
+                                  <div class="rt-resizable-header-content">Price</div>
+                                  <div class="rt-resizer"></div>
+                               </div>
+                               <div class=" rt-resizable-header -cursor-pointer rt-th" style="flex: 100 0 auto; width: 100px;">
+                                  <div class="rt-resizable-header-content">Volume</div>
+                                  <div class="rt-resizer"></div>
+                               </div>
+                               <div class=" rt-resizable-header -cursor-pointer rt-th" style="flex: 100 0 auto; width: 100px;">
+                                  <div class="rt-resizable-header-content">Depth</div>
+                                  <div class="rt-resizer"></div>
+                               </div>
+                               <div class=" rt-resizable-header -cursor-pointer rt-th" style="flex: 100 0 auto; width: 100px;">
+                                  <div class="rt-resizable-header-content">Age</div>
+                                  <div class="rt-resizer"></div>
+                               </div>
+                               <div class=" rt-resizable-header -cursor-pointer rt-th" style="flex: 100 0 auto; width: 100px;">
+                                  <div class="rt-resizable-header-content">UTXOs</div>
+                                  <div class="rt-resizer"></div>
+                               </div>
+                               <div class=" rt-resizable-header -cursor-pointer rt-th" style="flex: 100 0 auto; width: 100px;">
+                                  <div class="rt-resizable-header-content">Z</div>
+                                  <div class="rt-resizer"></div>
+                               </div>
+                            </div>
+                         </div>
+                         <div class="rt-tbody" style="min-width: 600px;">
+
+                         </div>
+                      </div>
+                      <div class="-loading">
+                         <div class="-loading-inner">Loading...</div>
+                      </div>
+                   </div>
+                    <div class="orderbook_numbids"></div>
+                   <div class="ReactTable -striped -highlight orderbook-bids">
+                      <div class="rt-table">
+                         <div class="rt-thead -header" style="min-width: 600px;">
+                            <div class="rt-tr">
+                               <div class=" rt-resizable-header -sort-asc -cursor-pointer rt-th" style="flex: 100 0 auto; width: 100px;">
+                                  <div class="rt-resizable-header-content">Price</div>
+                                  <div class="rt-resizer"></div>
+                               </div>
+                               <div class=" rt-resizable-header -cursor-pointer rt-th" style="flex: 100 0 auto; width: 100px;">
+                                  <div class="rt-resizable-header-content">Volume</div>
+                                  <div class="rt-resizer"></div>
+                               </div>
+                               <div class=" rt-resizable-header -cursor-pointer rt-th" style="flex: 100 0 auto; width: 100px;">
+                                  <div class="rt-resizable-header-content">Depth</div>
+                                  <div class="rt-resizer"></div>
+                               </div>
+                               <div class=" rt-resizable-header -cursor-pointer rt-th" style="flex: 100 0 auto; width: 100px;">
+                                  <div class="rt-resizable-header-content">Age</div>
+                                  <div class="rt-resizer"></div>
+                               </div>
+                               <div class=" rt-resizable-header -cursor-pointer rt-th" style="flex: 100 0 auto; width: 100px;">
+                                  <div class="rt-resizable-header-content">UTXOs</div>
+                                  <div class="rt-resizer"></div>
+                               </div>
+                               <div class=" rt-resizable-header -cursor-pointer rt-th" style="flex: 100 0 auto; width: 100px;">
+                                  <div class="rt-resizable-header-content">Z</div>
+                                  <div class="rt-resizer"></div>
+                               </div>
+                            </div>
+                         </div>
+                         <div class="rt-tbody" style="min-width: 600px;">
+
+                         </div>
+                      </div>
+                      <div class="-loading">
+                         <div class="-loading-inner">Loading...</div>
+                      </div>
+                   </div>
+                </section>
+             </section>
+          </section>
+          <div class="screen-inventory" style="display: none; margin-top: 60px;">
+            <div class="col-sm-12" style="display: ;">
+              <p>This screen shows you option to manage your coin's inventory. What is coin inventory?</p>
+              <p>Every crypto currency wallet is very much like your regular physical wallet. Just like in your physical wallet if you have different currency notes and coins available, that means they are not spent. You can spend them. If you use the same analogy in crypto currency, these unspent notes and coins can be referred as <b><i>unspent transactions.</i></b> In tiny bit technical term it's called <b>U</b>nspent <b>T</b>ransaction <b>O</b>utput, in short <b>UTXO</b>.</p>
+              <p>The decentralised Exchange doesn't run on total balance of your crypto currency wallet. It needs small unspent transactions. So, if you have sent a big transaction to your BarterDEX smart address, you can use this screen to split your balance to number of small UTXOs.</p>
+              <p>By clicking <i>Make Inventory</i> button, it will split your smart address balance to number of UTXOs and send them back to your smart address. It will cost regular transaction fee to split your smart address balance.</p>
+
+            </div>
+            <div class="col-sm-12" style="display: ;">
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  <h3 class="panel-title inventory-title coininventory" data-coin="COIN">Manage Inventory</h3>
+                </div>
+                <div class="panel-body">
+
+                  <form class="form-horizontal">
+                    <div class="form-group">
+                      <div class="col-sm-1">
+                        <span id="inventory-slider1inputlabel">Balance</span>
+                      </div>
+                      <div class="col-sm-2">
+                        <input type="number" class="form-control" id="inventory_slider_input1">
+                      </div>
+                      <div class="col-sm-5">
+                        <input id="inventory-slider1" type="text" class="col-sm-8 form-control" data-slider-min="0" data-slider-max="3" data-slider-step="1" data-slider-value="3"/>
+                      </div>
+                      <div class="col-sm-2">
+                        <span id="inventory-slider1CurrentValLabel">No. of deposit: <span id="inventory-slider1Val" style="font-weight: bold;">3</span></span>
+                      </div>
+                      <div class="col-sm-2">
+                        <span id="inventory-slider1CurrentTotalLabel">Total: <span id="inventory-slider1Total" style="font-weight: bold;"></span></span>
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <div class="col-sm-1">
+                        <span id="inventory-slider2inputlabel">Balance</span>
+                      </div>
+                      <div class="col-sm-2">
+                        <input type="number" class="form-control" id="inventory_slider_input2">
+                      </div>
+                      <div class="col-sm-5">
+                        <input id="inventory-slider2" type="text" class="col-sm-8 form-control" data-slider-min="0" data-slider-max="3" data-slider-step="1" data-slider-value="3"/>
+                      </div>
+                      <div class="col-sm-2">
+                        <span id="inventory-slider2CurrentValLabel">No. of deposit: <span id="inventory-slider2Val" style="font-weight: bold;">3</span></span>
+                      </div>
+                      <div class="col-sm-2">
+                        <span id="inventory-slider2CurrentTotalLabel">Total: <span id="inventory-slider2Total" style="font-weight: bold;"></span></span>
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <div class="col-sm-1">
+                        <span id="inventory-slider3inputlabel">Balance</span>
+                      </div>
+                      <div class="col-sm-2">
+                        <input type="number" class="form-control" id="inventory_slider_input3">
+                      </div>
+                      <div class="col-sm-5">
+                        <input id="inventory-slider3" type="text" class="col-sm-8 form-control" data-slider-min="0" data-slider-max="4" data-slider-step="1" data-slider-value="4"/>
+                      </div>
+                      <div class="col-sm-2">
+                        <span id="inventory-slider3CurrentValLabel">No. of deposit: <span id="inventory-slider3Val" style="font-weight: bold;">4</span></span>
+                      </div>
+                      <div class="col-sm-2">
+                        <span id="inventory-slider3CurrentTotalLabel">Total: <span id="inventory-slider3Total" style="font-weight: bold;"></span></span>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <div class="col-sm-offset-9 col-sm-3">
+                        <span style="font-weight: 300; font-size: 25px;">Total <span class="inventory-sliderTotal" style="font-weight: 300; font-size: 25px;"></span><span class="coininventory inventory-sliderTotalCoin"></span></span>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <div class="" style="text-align: center;">
+                        <button class="btn btn-primary coininventory btn-makeinventory" data-coin="COIN" coin-pair="NONE">Make Inventory</button>
+                      </div>
+                    </div>
+                  </form>
+
+                </div>
+                <div class="panel-footer" style="display: none;">
+
+                </div>
+
+              </div>
+            </div>
+
+            <div class="col-sm-12">
+              <div class="panel with-nav-tabs panel-default">
+                    <div class="panel-heading">
+                      <!--<button class="btn btn-default btn-sm backto_dex_balances" style="float: right; font-size: 13px; padding: 8px 8px;">Back</button>-->
+                      <button class="btn btn-xs btn-inventoryclose coininventory" data-coin="COIN" style="float: right; margin: 6px 6px 0px 3px;">BACK</button>
+                      <button class="btn btn-xs btn-inventoryrefresh coininventory" style="float: right; margin: 6px 6px 0px 3px;" data-coin="COIN"><span class="glyphicon glyphicon-refresh"></span></button>
+                      <ul class="nav nav-tabs">
+                          <li style="display: none;"><a href="#AliceInventory" data-toggle="tab" class="language" data-langstr="inventory_tab_inventory"></a></li>
+                          <li class="active"><a href="#ListUnspents" data-toggle="tab" class="language" data-langstr="inventory_list_unspent_tab"></a></li>
+                          <li style="display: none;"><a href="#RawJSONInventory" data-toggle="tab">Raw JSON</a></li>
+                      </ul>
+                    </div>
+                    <div class=""> <!-- panel-body -->
+                        <div class="tab-content">
+                            <div class="tab-pane fade" id="AliceInventory" style="display: none;">
+                              <table class="table table-striped dex_showinv_alice_tbl" style="margin-bottom: 0;">
+                                <tbody>
+                                  <th><div style="text-align: center;" class="language" data-langstr="loading_wait"></div></th>
+                                </tbody>
+                              </table>
+                            </div>
+                            <div class="tab-pane fade in active" id="ListUnspents">
+                              <table class="table table-striped dex_showlist_unspents_tbl" style="margin-bottom: 0;">
+                                <tbody>
+                                  <th><div style="text-align: center;" class="language" data-langstr="loading_wait"></div></th>
+                                </tbody>
+                              </table>
+                            </div>
+                            <div class="tab-pane fade" id="RawJSONInventory">
+                              <pre class="RawJSONInventory-output" style="margin: 0px;"></pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+          </div>
+          <footer class="window-footer window-footer__visible"></footer>
+       </content>
+    </div>
+
+  <!-- LOADING BODY -->
+  <div class="loadingbody" style="display: none;">
+    <div class="spinner">
+      <div class="dot1"></div>
+      <div class="dot2"></div>
+    </div>
+    <h3 class="language" data-langstr="starting_barterdex" style="text-align: center;font-weight: lighter;"></h3>
+  </div>
+  <!-- LOADING BODY END -->
+
+
+  <!-- MAIN BODY -->
+  <div class="mainbody" style="display: none;">
+
+    <!-- Section: Navigation Menu -->
+    <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+      <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-brand-centered">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <div class="navbar-brand">BarterDEX</div>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="navbar-brand-centered">
+          <ul class="nav navbar-nav">
+            <!--<li><a href="#">Link</a></li>
+            <li><a href="#">Link</a></li>
+            <li><a href="#">Link</a></li>-->
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <!--<li><a href="#">Link</a></li>-->
+            <li class="active"><a href="javascript:void(0)" class="dexdashboard-btn language" data-langstr="nav_dashboard"></a></li>
+            <li><a href="javascript:void(0)" class="dextradeshistory-btn language" data-langstr="nav_trade_history"></a></li>
+            <li><a href="javascript:void(0)" class="dexdebug-close-btn language" data-langstr="nav_close" style="display: none"></a></li>
+            <li><a href="javascript:void(0)" class="dexdebug-btn language" data-langstr="nav_debug"></a></li>
+            <li><a href="javascript:void(0)" class="dexsettings-btn language" data-langstr="nav_settings"></a></li>
+            <li><a href="javascript:void(0)" class="dexlogout-btn language" data-langstr="nav_logout"></a></li>
+          </ul>
+        </div><!-- /.navbar-collapse -->
+      </div><!-- /.container-fluid -->
+    </nav>
+    <!-- Section: Navigation Menu END -->
+    <div class="dextradeshistory" style="display: none; margin-top: 60px;">
+
+      <span class="refresh-trades-history-icon" onclick="constructTradesHistory()">
+        <i class="fa fa-refresh"></i>
+      </span>
+
+      <div id="trades-history-content">
+        <svg id="trades-history-spinner">
+          <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="5" stroke-miterlimit="10"/>
+          <circle class="path2" cx="50" cy="50" r="20" fill="none" stroke-width="5" stroke-miterlimit="10"/>
+          <circle class="path3" cx="50" cy="50" r="20" fill="none" stroke-width="5" stroke-miterlimit="10"/>
+          <circle class="path4" cx="50" cy="50" r="20" fill="none" stroke-width="5" stroke-miterlimit="10"/>
+        </svg>
+      </div>
+    </div>
+
+    <div class="dexdebug" style="display: none; margin-top: 60px;">
+      <h4 class="language" data-langstr="debug_payload"></h4>
+      <textarea cols="50" rows="5" id="debug-payload" class="language" data-langstr="debug_playload_input_placeholder" placeholder=""></textarea>
+      <button class="btn btn-primary language" data-langstr="debug_execute" id="debug-exec"></button>
+      <hr />
+      <h4 class="language" data-langstr="debug_response"></h4>
+      <div id="debug-payload-response"></div>
+    </div>
+
+    <!--div class="screen-portfolio" style="margin-top: 60px;">
+
+      <div class="col-sm-12">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title language" data-langstr="portfolio_portfolio_chart"></h3>
+            <button class="btn btn-xs btn-info btn-activatecoins portfolio" style="float: right; margin-right: -6px; margin-top: -20px"><span class="language" data-langstr="portfolio_add_coins"></span> <span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
+            <button class="btn btn-xs btn-refreshportfolio portfolio" style="float: right; margin-right: 6px; margin-top: -20px"><span class="glyphicon glyphicon-refresh" aria-hidden="true"></span></button>
+          </div>
+          <div class="portfolio portfolio-coinslist">
+            <div class="col-sm-6" id="portfolio_chart_current" style="height: 300px;"></div>
+            <div class="col-sm-6" id="portfolio_chart_target" style="height: 300px;"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-sm-12">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title language" data-langstr="portfolio_portfolio_coins"></h3>
+            <button class="btn btn-xs btn-info btn-autogoalall portfolio language" data-langstr="portfolio_auto_goal_all_active_coins" data-auto=true style="float: right; margin-right: -6px; margin-top: -20px"></button>
+          </div>
+          <div class="portfolio portfolio-coinslist">
+            <table class="table table-striped porfolio_coins_list" style="margin-bottom: 0;">
+              <thead>
+                <tr>
+                  <th class="language" data-langstr="portfolio_th_coin"></th>
+                  <th class="language" data-langstr="portfolio_th_balance"></th>
+                  <th class="language" data-langstr="portfolio_th_price"></th>
+                  <th class="language" data-langstr="portfolio_th_current_percent"></th>
+                  <th class="language" data-langstr="portfolio_th_goal_percent"></th>
+                  <th class="language" data-langstr="portfolio_th_kmdvalue"></th>
+                  <th class="language" data-langstr="portfolio_th_action" width="430px"></th>
+                </tr>
+              </thead>
+              <tbody>
+                <th colspan="7">
+                  <div style="text-align: center; height: 100px;">
+                    <svg id="portfolio-coins-spinner">
+                      <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="5" stroke-miterlimit="10"/>
+                      <circle class="path2" cx="50" cy="50" r="20" fill="none" stroke-width="5" stroke-miterlimit="10"/>
+                      <circle class="path3" cx="50" cy="50" r="20" fill="none" stroke-width="5" stroke-miterlimit="10"/>
+                      <circle class="path4" cx="50" cy="50" r="20" fill="none" stroke-width="5" stroke-miterlimit="10"/>
+                    </svg>
+                  </div>
+                </th>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+    </div-->
+
+    <div class="screen-exchange" style="display: none; margin-top: 60px;">
+
+
+
+      <div class="col-md-5 col-lg-4" style="padding: 2px;">
+        <div class="row">
+
+          <div class="col-sm-12 col2">
+            <div class="panel with-nav-tabs panel-default" style="margin-bottom: 5px;">
+              <div class="panel-heading">
+                <ul class="nav nav-tabs">
+                    <li class="active"><a href="#exchange_trading_pair" data-toggle="tab"><span class="language" data-langstr="exchange_trading_pair"></span> <button class="btn btn-xs btn-refreshtrading_pair coinexchange" data-coin="COIN"><span class="glyphicon glyphicon-refresh" aria-hidden="true"></span></button></a></li>
+                    <li><a href="#exchange_zeroconf_settings" data-toggle="tab" class="language" data-langstr="exchange_speed_mode_settings"></a></li>
+                </ul>
+              </div>
+              <div class=""> <!-- panel-body -->
+                <div class="tab-content">
+
+                  <div class="tab-pane fade in active" id="exchange_trading_pair" style="padding: 15px;">
+                    <div class="row">
+                      <div class="col-sm-12">
+                        <!--div class="form-group trading_buysell_options">
+                          <div class="btn-group btn-group-justified colors" data-toggle="buttons">
+                            <label class="btn btn-info active">
+                              <input type="radio" name="trading_pair_options" id="trading_pair_options_buying" value="buying" autocomplete="off" checked> <span class="language" data-langstr="exchange_btn_buy_caps"></span> <span class="coin_ticker"></span></label>
+                            <label class="btn btn-info">
+                              <input type="radio" name="trading_pair_options" id="trading_pair_options_selling" value="selling" autocomplete="off"> <span class="language" data-langstr="exchange_btn_sell_caps"></span> <span class="coin_ticker"></span></label>
+                          </div>
+                        </div-->
+                        <div class="form-group trading_method_options">
+                          <div class="btn-group btn-group-justified colors" data-toggle="buttons">
+                            <label class="btn btn-warning active">
+                              <input type="radio" name="trading_mode_options" id="trading_mode_options_tradebot" value="tradebot" autocomplete="off"><span class="language" data-langstr="exchange_btn_trade_bot"></span></label>
+                            <label class="btn btn-warning">
+                              <input type="radio" name="trading_mode_options" id="trading_mode_options_trademanual" value="trademanual" autocomplete="off"><span class="language" data-langstr="exchange_btn_manual_trade"></span></label>
+                            <label class="btn btn-warning">
+                              <input type="radio" name="trading_mode_options" id="trading_mode_options_tradeportfolio" value="tradeportfolio" autocomplete="off"><span class="language" data-langstr="exchange_btn_portfolio"></span></label>
+                          </div>
+                        </div>
+
+                        <div class="input-group col-sm-12">
+
+                        </div>
+
+                        <div class="form-group trading_selected_trader_label" style="margin-top: 15px; margin-bottom: 0px; display: none;">
+                          <span style="font-size: 18px;" class="language" data-langstr="exchange_trade_with_selected_trader"></span>
+                        </div>
+                        <div class="input-group col-sm-12 trading_selected_trader" style="display: none;">
+                          <span class="input-group-addon">
+                            <input class="big-checkbox trading_pair_destpubkey_yesno" type="checkbox"> <span class="language" data-langstr="exchange_destpubkey_yes"></span>
+                          </span>
+                          <input type="text" class="form-control trading_pair_destpubkey" placeholder="eg. bab6ad2eebe1e666369cab504d4622b22c1f1ef718ef388e88020f30a1573e01" style="height: 44px; font-size: 20px;">
+                        </div>
+
+
+                        <div class="input-group col-sm-12 trading_auto_repeat_trade">
+                          <!--<input class="big-checkbox trading_auto_repeat_trade_yesno" type="checkbox"> Enable auto-repeat this trade <br>-->
+                          <div class="buy_sell_advanced_options_div" style="border: 1px solid #4c4c4c; padding: 10px; border-radius: 3px; margin: 10px 0;">
+                            <div class="pretty p-default p-curve">
+                                <input type="radio" name="trading_manual_buy_sell_options" value="disabled" checked />
+                                <div class="state p-danger-o">
+                                    <label class="language" data-langstr="exchange_dont_auto_repeat_order"></label>
+                                </div>
+                            </div> <br>
+
+                            <div class="pretty p-default p-curve">
+                                <input type="radio" name="trading_manual_buy_sell_options" value="autorepeat" />
+                                <div class="state p-success-o">
+                                    <label class="language" data-langstr="exchange_enable_auto_repeat_this_trade"></label>
+                                </div>
+                            </div> <br>
+
+                            <div class="pretty p-default p-curve">
+                                <input type="radio" name="trading_manual_buy_sell_options" value="coinmarketcap" />
+                                <div class="state p-success-o">
+                                    <label class="language" data-langstr="exchange_enable_auto_repeat_coinmarketcap"></label>
+                                </div>
+                            </div>
+                          </div>
+
+                        </div>
+
+                        <!--div class="input-group col-sm-12">
+                          <span class="input-group-addon relvol_basevol_label language" data-langstr="exchange_itll_cost_you"></span>
+                          <span class="input-group-addon relvol_basevol_amount"><span class="relvol_basevol">0</span> <span class="relvol_basevol_coin"></span></span>
+                        </div-->
+
+                        <div class="form-group coingoal_label_div" style="margin-top: 15px; margin-bottom: 0px; display: none;">
+                          <span style="font-size: 118%;"><span class="language" data-langstr="exchange_set_small"></span> <span class="coingoal_label_coin_name"></span> <span class="language" data-langstr="exchange_goal_percent_for_your_portfolio"></span></span>
+                        </div>
+                        <div class="input-group col-sm-12 coingoal_div" style="display: none;">
+                          <span class="input-group-addon coin_ticker" id="coingoal_coin_ticker" style="font-size: 20px;"></span>
+                          <input type="number" class="form-control coingoal_percentage" placeholder="e.g. 12.5" style="height: 44px; font-size: 20px;">
+                          <span class="input-group-btn">
+                            <button class="btn btn-primary btn_set_coin_goal language" data-langstr="exchange_set_gaol_caps" data-action="goal" data-auto=false style="height: 44px; font-size: 20px;"></button>
+                          </span>
+                        </div>
+
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="tab-pane fade" id="exchange_zeroconf_settings">
+                    <div class="row" style="padding: 15px;">
+                      <div class="col-sm-12">
+                        <p><span class="language" data-langstr="exchange_0conf_settings_text_one"></span> <span class="language" data-langstr="exchange_0conf_settings_text_two"></span> <a href="#" class="info_box_for_zeroconf language" data-langstr="exchange_0conf_settings_a"></a> <span class="language" data-langstr="exchange_0conf_settings_text_three"></span></p>
+
+                        <div class="form-group">
+                          <span style="float: left; font-size: 18px;" class="language" data-langstr="exchange_0conf_deposit_high_speed_mode_sec"></span>
+                        </div>
+                        <div class="input-group col-sm-12">
+                          <select class="selectpicker zeroconf_weeks_select" data-live-search="true" data-hide-disabled="true" data-width="30%"></select>
+                          <input type="number" class="form-control zeroconf_deposit_amount" value="10">
+                          <span class="input-group-addon">KMD</span>
+                        </div>
+
+                        <div class="form-group">
+                          <span style="float: left; font-size: 18px;"></span>
+                        </div>
+                        <div class="input-group col-sm-12">
+                          <button class="btn btn-primary btn-block btn_zeroconf_deposit language" data-langstr="exchange_0conf_make_sec_deposit"></button>
+                        </div>
+                        <div class="input-group col-sm-12" style="padding-top: 15px;">
+                          <button class="btn btn-warning btn_zeroconf_deposit_history language" data-langstr="exchange_0conf_see_deposit_history"></button>
+                          <button class="btn btn-success btn_zeroconf_claim_deposit language" data-langstr="exchange_0conf_claim_deposit" style="margin-left: 10px;"></button>
+                        </div>
+
+                      </div>
+                    </div>
+
+                  </div>
+
+                </div>
+
+
+
+              </div>
+            </div>
+          </div>
+
+
+
+
+          <div class="col-sm-12 col3">
+            <div class="panel with-nav-tabs panel-default" style="margin-bottom: 5px;">
+                  <div class="panel-heading">
+                    <!--<button class="btn btn-xs btn-exchangeclose coinexchange" data-coin="COIN" style="float: right; margin: 6px 6px 0px 3px;">BACK</button>
+                    <button class="btn btn-xs btn-exchangerefresh coinexchange" data-coin="COIN" style="float: right; margin: 6px 6px 0px 3px;"><span class="glyphicon glyphicon-refresh"></span></button>-->
+                    <ul class="nav nav-tabs">
+                        <li><a href="#exchange_myorders" data-toggle="tab"><span class="language" data-langstr="exchange_my_prices"></span> <button class="btn btn-xs btn-myordersrefresh coinexchange" data-coin="COIN"><span class="glyphicon glyphicon-refresh"></span></button></a></li>
+                        <li class="autobot_tab"><a href="#exchange_botlist" data-toggle="tab"><span class="language" data-langstr="exchange_auto_bot_list"></span> <button class="btn btn-xs btn-botlistrefresh coinexchange" data-coin="COIN"><span class="glyphicon glyphicon-refresh"></span></button></a></li>
+                        <li class="active"><a href="#exchange_tradestatus" data-toggle="tab"><span class="language" data-langstr="exchange_trade_status"></span> <button class="btn btn-xs btn-botlistrefresh coinexchange" data-coin="COIN"><span class="glyphicon glyphicon-refresh"></span></button></a></li>
+                    </ul>
+                  </div>
+                  <div class=""> <!-- panel-body -->
+                      <div class="tab-content">
+                          <div class="tab-pane fade" id="exchange_myorders">
+
+                            <table class="table table-striped exchange_my_orders_tbl" style="margin-bottom: 0;">
+                              <thead>
+                                <th class="language" data-langstr="exchange_th_my_orders_base"></th>
+                                <th class="language" data-langstr="exchange_th_my_orders_rel"></th>
+                                <th class="language" data-langstr="exchange_th_my_orders_bid"></th>
+                                <th class="language" data-langstr="exchange_th_my_orders_ask"></th>
+                                <th>-</th>
+                              </thead>
+                              <tbody>
+                                <th><div style="text-align: center;" class="language" data-langstr="loading_wait"></div></th>
+                              </tbody>
+                            </table>
+
+                          </div>
+                          <div class="tab-pane fade" id="exchange_botlist">
+
+                            <table class="table exchange_bot_list_tbl" width="100%" style="margin-bottom: 0;">
+                              <thead>
+                                <!--<th>Bot ID</th>-->
+                                <th class="language" data-langstr="exchange_th_bot_list_tradebot_info"></th>
+                                <!--<th>Bot Action</th>-->
+                                <!--<th>Price</th>
+                                <th>Max Volume</th>-->
+                                <th class="language" data-langstr="exchange_th_bot_list_progress_info"></th>
+                                <th class="language" data-langstr="exchange_th_bot_list_actions"></th>
+                              </thead>
+                              <tbody></tbody>
+                            </table>
+                          </div>
+
+                          <div class="tab-pane fade in active" id="exchange_tradestatus">
+                            <div class="exchange_trade_status_body mCustomScrollbar" data-mcs-theme="minimal-dark">
+                              <table class="table table-striped exchange_swap_status_tbl" width="100%" style="margin-bottom: 0;">
+                                <thead>
+                                  <th class="language" data-langstr="exchange_th_swap_status_status"></th>
+                                  <th class="language" data-langstr="exchange_th_swap_status_info"></th>
+                                  <!--<th>Quote ID</th>
+                                  <th>Request ID</th>-->
+                                  <th class="language" data-langstr="exchange_th_swap_status_action"></th>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                              </table>
+                              <svg id="exchange-swap-status-spinner" class="exchange-swap-status-spinner">
+                                <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="5" stroke-miterlimit="10"/>
+                                <circle class="path2" cx="50" cy="50" r="20" fill="none" stroke-width="5" stroke-miterlimit="10"/>
+                                <circle class="path3" cx="50" cy="50" r="20" fill="none" stroke-width="5" stroke-miterlimit="10"/>
+                                <circle class="path4" cx="50" cy="50" r="20" fill="none" stroke-width="5" stroke-miterlimit="10"/>
+                              </svg>
+                            </div>
+                          </div>
+
+                      </div>
+                  </div>
+            </div>
+          </div>
+
+
+        </div>
+      </div>
+
+      <div class="col-md-7 col-lg-8" style="padding: 2px;">
+        <div id="chartContainer" style="z-index: 1000;"></div>
+      </div>
+
+
+      <div class="col-md-7 col-lg-8" style="padding: 2px;">
+        <div class="row">
+
+          <div class="hidden-xs hidden-sm hidden-md col-lg-6 col-xl-6" style="padding-right: 2px;">
+            <div class="panel panel-default">
+                  <div class="panel-heading">
+                    <span class="language" data-langstr="exchange_sellers_caps"></span>: <span class="orderbook_numasks"></span>
+                    <button class="btn btn-xs btn-exchangeclose coinexchange" data-coin="COIN" style="float: right; margin: 0px -8px 0px 3px;"><span class="language" data-langstr="exchange_btn_back"></span></button>
+                    <button class="btn btn-xs btn-exchangerefresh coinexchange" data-coin="COIN" style="float: right; margin: 0px 0px 0px 3px;"><span class="glyphicon glyphicon-refresh"></span></button>
+                  </div>
+                  <div class=""> <!-- panel-body -->
+                      <div class="mCustomScrollbar" data-mcs-theme="minimal-dark" id="exchange_coin_asks">
+                        <table class="table table-striped orderbook_asks" width="100%" style="margin-bottom: 0;">
+                          <thead><th><span class="language" data-langstr="exchange_th_orderbook_price_in"></span> <span class="orderbook_rel_coin"></span></th>
+                            <!--<th>Size(Min-Max <span class="orderbook_base_coin"></span>)</th>
+                            <th>Size(Min-Max <span class="orderbook_rel_coin"></span>)</th>
+                            <th>Sum(<span class="orderbook_rel_coin"></span>)</th>-->
+                            <th class="language" data-langstr="exchange_th_orderbook_avg_volume"></th>
+                            <th class="language" data-langstr="exchange_th_orderbook_depth"></th>
+                            <th class="language" data-langstr="exchange_th_orderbook_age"></th>
+                            <th class="language" data-langstr="exchange_th_orderbook_utxos"></th>
+                            <th class="language" data-langstr="exchange_th_orderbook_zcredits"></th>
+                            <th class="language" data-langstr="exchange_th_orderbook_info">Info</th>
+                            </thead>
+                          <tbody></tbody>
+                        </table>
+                        <svg id="orderbook-asks-spinner" class="orderbook-asks-spinner">
+                          <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="5" stroke-miterlimit="10"/>
+                          <circle class="path2" cx="50" cy="50" r="20" fill="none" stroke-width="5" stroke-miterlimit="10"/>
+                          <circle class="path3" cx="50" cy="50" r="20" fill="none" stroke-width="5" stroke-miterlimit="10"/>
+                          <circle class="path4" cx="50" cy="50" r="20" fill="none" stroke-width="5" stroke-miterlimit="10"/>
+                        </svg>
+                      </div>
+                  </div>
+            </div>
+          </div>
+
+          <div class="hidden-xs hidden-sm hidden-md col-lg-6 col-xl-6" style="padding-left: 2px;">
+            <div class="panel panel-default">
+                  <div class="panel-heading">
+                    <span class="language" data-langstr="exchange_buyers_caps"></span>: <span class="orderbook_numbids"></span>
+                    <button class="btn btn-xs btn-exchangeclose coinexchange" data-coin="COIN" style="float: right; margin: 0px -8px 0px 3px;"><span class="language" data-langstr="exchange_btn_back"></span></button>
+                    <button class="btn btn-xs btn-exchangerefresh coinexchange" data-coin="COIN" style="float: right; margin: 0px 0px 0px 3px;"><span class="glyphicon glyphicon-refresh"></span></button>
+                  </div>
+                  <div class=""> <!-- panel-body -->
+                      <div class="mCustomScrollbar" data-mcs-theme="minimal-dark" id="exchange_coin_bids">
+                        <table class="table table-striped orderbook_bids" width="100%" style="margin-bottom: 0;">
+                          <thead><th><span class="language" data-langstr="exchange_th_orderbook_price_in"></span> <span class="orderbook_rel_coin"></span></th>
+                            <!--<th>Min <span class="orderbook_rel_coin"></span></th>
+                            <th>Max <span class="orderbook_rel_coin"></span></th>-->
+                            <th class="language" data-langstr="exchange_th_orderbook_avg_volume"></th>
+                            <th class="language" data-langstr="exchange_th_orderbook_depth"></th>
+                            <th class="language" data-langstr="exchange_th_orderbook_age"></th>
+                            <th class="language" data-langstr="exchange_th_orderbook_utxos"></th>
+                            <th class="language" data-langstr="exchange_th_orderbook_zcredits"></th>
+                            <th class="language" data-langstr="exchange_th_orderbook_info">Info</th>
+                          </thead>
+                          <tbody></tbody>
+                        </table>
+                      </div>
+                  </div>
+            </div>
+          </div>
+
+          <div class="col-sm-12 col-md-12 hidden-lg hidden-xl">
+            <div class="panel with-nav-tabs panel-default">
+                  <div class="panel-heading">
+                    <button class="btn btn-xs btn-exchangeclose coinexchange" data-coin="COIN" style="float: right; margin: 6px 6px 0px 3px;"><span class="language" data-langstr="exchange_btn_back"></span></button>
+                    <button class="btn btn-xs btn-exchangerefresh coinexchange" data-coin="COIN" style="float: right; margin: 6px 6px 0px 3px;"><span class="glyphicon glyphicon-refresh"></span></button>
+                    <ul class="nav nav-tabs">
+                        <li class="active"><a href="#exchange_coin_asks_togl" data-toggle="tab"><span class="language" data-langstr="exchange_sellers_caps"></span>: <span class="orderbook_numasks"></span></a></li>
+                        <li><a href="#exchange_coin_bids_togl" data-toggle="tab"><span class="language" data-langstr="exchange_buyers_caps"></span>: <span class="orderbook_numbids"></span></a></li>
+                    </ul>
+                  </div>
+                  <div class=""> <!-- panel-body -->
+                      <div class="tab-content">
+                          <div class="tab-pane fade in active mCustomScrollbar" data-mcs-theme="minimal-dark" id="exchange_coin_asks_togl">
+
+                            <table class="table table-striped orderbook_asks" width="100%" style="margin-bottom: 0;">
+                              <thead><th><span class="language" data-langstr="exchange_th_orderbook_price_in"></span> <span class="orderbook_rel_coin"></span></th>
+                                <!--<th>Size(Min-Max <span class="orderbook_base_coin"></span>)</th>
+                                <th>Size(Min-Max <span class="orderbook_rel_coin"></span>)</th>
+                                <th>Sum(<span class="orderbook_rel_coin"></span>)</th>-->
+                                <th class="language" data-langstr="exchange_th_orderbook_avg_volume"></th>
+                                <th class="language" data-langstr="exchange_th_orderbook_depth"></th>
+                                <th class="language" data-langstr="exchange_th_orderbook_age"></th>
+                                <th class="language" data-langstr="exchange_th_orderbook_utxos"></th>
+                                <th class="language" data-langstr="exchange_th_orderbook_zcredits"></th>
+                                <th class="language" data-langstr="exchange_th_orderbook_info">Info</th>
+                                </thead>
+                              <tbody></tbody>
+                            </table>
+                            <svg id="orderbook-asks-spinner" class="orderbook-asks-spinner">
+                              <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="5" stroke-miterlimit="10"/>
+                              <circle class="path2" cx="50" cy="50" r="20" fill="none" stroke-width="5" stroke-miterlimit="10"/>
+                              <circle class="path3" cx="50" cy="50" r="20" fill="none" stroke-width="5" stroke-miterlimit="10"/>
+                              <circle class="path4" cx="50" cy="50" r="20" fill="none" stroke-width="5" stroke-miterlimit="10"/>
+                            </svg>
+                          </div>
+                          <div class="tab-pane fade mCustomScrollbar" data-mcs-theme="minimal-dark" id="exchange_coin_bids_togl">
+
+                            <table class="table table-striped orderbook_bids" width="100%" style="margin-bottom: 0;">
+                              <thead><th><span class="language" data-langstr="exchange_th_orderbook_price_in"></span> <span class="orderbook_rel_coin"></span></th>
+                                <!--<th>Min <span class="orderbook_rel_coin"></span></th>
+                                <th>Max <span class="orderbook_rel_coin"></span></th>-->
+                                <th class="language" data-langstr="exchange_th_orderbook_avg_volume"></th>
+                                <th class="language" data-langstr="exchange_th_orderbook_depth"></th>
+                                <th class="language" data-langstr="exchange_th_orderbook_age"></th>
+                                <th class="language" data-langstr="exchange_th_orderbook_utxos"></th>
+                                <th class="language" data-langstr="exchange_th_orderbook_zcredits"></th>
+                                <th class="language" data-langstr="exchange_th_orderbook_info">Info</th>
+                              </thead>
+                              <tbody></tbody>
+                            </table>
+                          </div>
+                      </div>
+                  </div>
+            </div>
+          </div>
+
+
+          <!--<div class="col-sm-12">
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <h3 class="panel-title"><strong>Trade Status</strong></h3>
+                <button class="btn btn-xs btn-swapstatusrefresh coinexchange" data-coin="COIN" style="float: right; margin: -20px -8px 0px 0px"><span class="glyphicon glyphicon-refresh"></span></button>
+              </div>
+              <div class="exchange_trade_status_body">
+                <table class="table table-striped exchange_swap_status_tbl fixed_headers" width="100%" style="margin-bottom: 0;">
+                  <thead>
+                    <th>Status</th>
+                    <th>Quote ID</th>
+                    <th>Request ID</th>
+                    <th>Action</th>
+                  </thead>
+                  <tbody>
+                  </tbody>
+                </table>
+                <svg id="exchange-swap-status-spinner" class="exchange-swap-status-spinner">
+                  <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="5" stroke-miterlimit="10"/>
+                  <circle class="path2" cx="50" cy="50" r="20" fill="none" stroke-width="5" stroke-miterlimit="10"/>
+                  <circle class="path3" cx="50" cy="50" r="20" fill="none" stroke-width="5" stroke-miterlimit="10"/>
+                  <circle class="path4" cx="50" cy="50" r="20" fill="none" stroke-width="5" stroke-miterlimit="10"/>
+                </svg>
+              </div>
+            </div>
+          </div>-->
+
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+  <!-- MAIN BODY END-->
+
+
+
+
+
+<script>
+  var ipc = require('electron').ipcRenderer;
+  if (typeof module === 'object') {
+    window.module = module; module = undefined;
+  }
+</script>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="js/jquery.min.js" type="text/javascript"></script>
+    <script src="js/charts/jquery-migrate-3.0.0.min.js" type="text/javascript"></script>
+    <script src="js/charts/jquery-ui.min.js" type="text/javascript"></script>
+    <script src="js/coin_select_options.js" type="text/javascript"></script>
+    <script src="js/login_select_options.js" type="text/javascript"></script>
+    <script src="js/zeroconf_weeks_select_options.js" type="text/javascript"></script>
+    <script src="js/coin_names.js" type="text/javascript"></script>
+    <script src="js/ipc-actions.js" type="text/javascript"></script>
+    <script src="js/barterdexcharts.js" type="text/javascript"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="js/fuelux.min.js" type="text/javascript"></script>
+    <script src="js/bootstrap-select.min.js" type="text/javascript"></script>
+    <script src="js/bootstrap-show-password.min.js" type="text/javascript"></script>
+    <script src="js/qrcode.min.js" type="text/javascript"></script>
+    <script src="js/toastr.min.js" type="text/javascript"></script>
+    <script src="js/bootstrap-toggle.min.js" type="text/javascript"></script>
+    <script src="js/bootbox.min.js" type="text/javascript"></script>
+    <script src="js/clipboard.min.js" type="text/javascript"></script>
+    <script src="js/bootstrap-slider.min.js" type="text/javascript"></script>
+    <script src="js/number-polyfill.min.js" type="text/javascript"></script>
+    <script src="js/underscore-min.js" type="text/javascript"></script>
+    <script src="js/moment.min.js" type="text/javascript"></script>
+    <script src="js/countdown.min.js" type="text/javascript"></script>
+    <!--script src="js/jquery.mCustomScrollbar.concat.min.js" type="text/javascript"></script-->
+    <script src="js/jquery.marquee.min.js" type="text/javascript"></script>
+    <script src="js/HoldOn.min.js" type="text/javascript"></script>
+    <script src="js/BootstrapMenu.min.js" type="text/javascript"></script>
+    <!-- Crypto Dependencies -->
+    <script src="js/wordlist.js" type="text/javascript"></script>
+    <script src="js/passphrasegenerator.js" type="text/javascript"></script>
+    <script src="js/seedrandom.js" type="text/javascript"></script>
+    <!-- amcharts libs -->
+    <script src="js/amcharts/amcharts.js" type="text/javascript"></script>
+    <script src="js/amcharts/pie.js" type="text/javascript"></script>
+    <script src="js/amcharts/plugins/animate/animate.min.js" type="text/javascript"></script>
+    <script src="js/amcharts/plugins/export/export.min.js" type="text/javascript"></script>
+    <script src="js/amcharts/plugins/responsive/responsive.min.js" type="text/javascript"></script>
+    <script src="js/amcharts/themes/light.js" type="text/javascript" id="amcharts_light_theme"></script>
+    <script src="js/amcharts/themes/black.js" type="text/javascript" id="amcharts_dark_theme"></script>
+    <!-- StockCharts -->
+    <script src="js/charts/ChartContextMenu_html.js"></script>
+    <script src="js/charts/Navigation_html.js"></script>
+    <script src="js/charts/Toolbar_html.js"></script>
+    <script src="js/charts/IndicatorContextMenu_html.js"></script>
+    <script src="js/charts/ThemeDialog_html.js"></script>
+    <script src="js/charts/IndicatorContextMenu_html.js"></script>
+    <script src="js/charts/IndicatorInfoDialog_html.js"></script>
+    <script src="js/charts/IchimokuIndicatorSettingsDialog_html.js"></script>
+    <script src="js/charts/DrawingSettingsDialog_html.js"></script>
+    <script src="js/charts/DrawingContextMenu_html.js"></script>
+    <script src="js/charts/PriceStyleSettingsDialog_html.js"></script>
+    <script src="js/charts/IndicatorsHelp_html.js"></script>
+    <script src="js/charts/IndicatorSettingsDialog_html.js"></script>
+    <script src="js/charts/IndicatorsDialog_html.js"></script>
+    <script src="js/charts/Intl.complete.min.js" type="text/javascript"></script>
+    <script src="js/charts/moment.min.js" type="text/javascript"></script>
+    <script src="js/charts/detectizr.min.js" type="text/javascript"></script>
+    <script src="js/charts/html2canvas.min.js" type="text/javascript"></script>
+    <script src="js/moment-duration-format.min.js" type="text/javascript"></script>
+    <!--<script src="js/charts/StockChartX-Light.min.js" charset="iso-8859-1" type="text/javascript"></script>-->
+    <script src="js/charts/StockChartX.min.js" charset="iso-8859-1" type="text/javascript"></script>
+    <script src="js/charts/StockChartX.UI.min.js" charset="iso-8859-1" type="text/javascript"></script>
+    <script src="js/charts/StockChartX.External.min.js" type="text/javascript"></script>
+    <script src="js/charts/custom-indicator.js" type="text/javascript"></script>
+    <!--<script src="js/charts/site.js" type="text/javascript"></script>-->
+    <!-- custom dex actions javascript -->
+    <!--<script src="js/dexactions.js" type="text/javascript"></script>-->
+    <script src="js/simpledexactions.js" type="text/javascript"></script>
+    <script src="js/electrum_list.js" type="text/javascript"></script>
+    <script src="js/barterdex_remote_alerts.js" type="text/javascript"></script>
+
+    <script src="js/language-codes_json.js" type="text/javascript"></script>
+    <script src="js/country_list_json.js" type="text/javascript"></script>
+    <script src="js/barterdex_localization.js" type="text/javascript"></script>
+  </body>
+</html>

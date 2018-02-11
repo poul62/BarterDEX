@@ -1,0 +1,561 @@
+body,
+html {
+  background: #1b1d23;
+}
+
+.modal {
+  z-index: 2700;
+}
+
+.loadingbody {
+  z-index: 3000;
+  position: relative;
+}
+
+.coinList-coin {
+  width: inherit !important;
+}
+
+.dashboard-wallets-list.porfolio_coins_list:after {
+  background: none !important;
+  box-shadow: none !important;
+}
+
+.dex .dashboard-wallets,
+.dex .dashboard-wallets-header,
+.dex .dashboard-wallets-list {
+  width: inherit;
+}
+
+.dex {
+  border-radius: 0;
+}
+
+.dex .dashboard-swaps,
+.dex .dashboard-wallets .dashboard-wallets-list {
+  height: inherit;
+}
+
+#dashboard-coins {
+  width: 100%;
+}
+
+/* modals */
+
+.bootbox {
+  background: rgba(0, 0, 0, 0.4);
+}
+
+.bootbox .modal-content {
+  background: #282c34;
+  color: #fff;
+  border: solid 1px rgba(255, 255, 255, 0.3);
+  border-radius: 4px;
+}
+
+.bootbox .modal-content .panel-heading,
+.bootbox .modal-content .panel-body {
+  background: #282c34;
+  border: none;
+}
+.bootbox .modal-content .panel-title {
+  color: #fff;
+}
+.bootbox .modal-content .panel {
+  box-shadow: none;
+}
+
+.bootbox .btn-success {
+  color: #fff;
+  background-color: #326464 !important;
+  border-color: #326464 !important;
+}
+
+.bootbox .toggle_checkbox {
+  display: none !important;
+}
+
+.bootbox .toggle {
+  width: 100%;
+  height: 44px;
+  position: relative;
+  left: 28px;
+}
+
+.bootbox .toggle .toggle-off {
+  display: none !important;
+}
+.bootbox .toggle .toggle-on {
+  display: inline-block !important;
+}
+.bootbox .toggle.off .toggle-on {
+  display: none !important;
+}
+.bootbox .toggle.off .toggle-off {
+  display: inline-block !important;
+}
+
+.bootbox .toggle,
+.bootbox .toggle:focus,
+.bootbox .toggle:active {
+  background: #fff;
+  border-color: #fff;
+}
+.bootbox .toggle-handle {
+  display: none;
+}
+
+.bootbox .toggle .btn {
+  position: relative;
+  top: -3px;
+  box-shadow: none;
+  background: #fff;
+  border-color: #fff;
+  color: #757575;
+}
+
+.btn.dropdown-toggle.selectpicker.btn-default {
+  background: #fff;
+  color: #757575;
+}
+.dropdown-menu.open .selected {
+  display: none;
+}
+.dropdown-menu.open i {
+  display: none;
+  margin-left: 15px;
+}
+.dropdown-menu.open .selected i {
+  display: inherit;
+}
+.dropdown-menu.open img {
+  margin-right: 5px;
+}
+.dropdown-menu > li dt {
+  display: none;
+}
+.dropdown-menu > li {
+  margin: 0;
+  position: relative;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-negative: 0;
+  flex-shrink: 0;
+  border-bottom: 1px solid #282c34;
+  transition: all .2s ease;
+  will-change: transform;
+  overflow: hidden;
+  background: #1b1d23;
+}
+
+.dropdown-menu > li a {
+  color: #fff;
+}
+
+.dropdown-menu > li a:hover,
+.dropdown-menu > li.active a {
+  color: #fff !important;
+  background: #8a0efb !important;
+}
+
+.dropdown-menu > li img {
+  border-radius: 50%;
+}
+
+.dropdown-menu > li a {
+  padding: 14px 20px 14px 25px !important;
+  display: block;
+  width: 100%;
+}
+
+.dropdown-menu {
+  background: #1b1d23;
+}
+
+.dropdown-menu .input-block-level.form-control {
+  margin-bottom: 15px;
+  width: 95%;
+  margin-top: 5px;
+  margin-left: 3%;
+}
+
+.btn.dropdown-toggle.selectpicker.btn-default {
+  background: #000;
+  color: #fff;
+  font: inherit;
+  outline: none;
+  border: 0;
+  -webkit-app-region: no-drag;
+  border-radius: 4px;
+  border: 2px solid #000;
+  box-shadow: 0 1px 1px 0 rgba(0,0,0,.2), 0 0 0 1px rgba(0,0,0,.1), 0 12px 24px 0 rgba(0,0,0,.05);
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.btn.dropdown-toggle.selectpicker.btn-default img {
+  margin-right: 10px;
+}
+
+.open .btn.dropdown-toggle.selectpicker.btn-default {
+  border: 2px solid #8a0efb;
+}
+
+.bootstrap-select.btn-group .dropdown-toggle .caret:before {
+  content: '';
+  position: absolute;
+  top: -14px;
+  right: -11px;
+  margin-top: -2px;
+  vertical-align: middle;
+  margin-left: 8px;
+  padding: 14px 11px;
+  border-radius: 4px;
+  background: hsla(0,0%,100%,.1);
+  box-shadow: 0 6px 20px rgba(0,0,0,.14);
+}
+
+.btn-group.bootstrap-select.addcoin_enable_disable_selection {
+  width: 268px !important;
+  position: relative;
+  left: -17px;
+}
+
+/* debug */
+.switch-gui {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: #fff;
+  border: solid 1px #000;
+  z-index: 4000;
+}
+.screen-exchange {
+  z-index: 4000;
+  position: relative;
+  top: 400px;
+  left: 400px;
+}
+
+/* exchange */
+.wallet-orderbooks .myswaps-block {
+  height: 50vh;
+  overflow-y: auto;
+}
+
+.wallet-orderbooks .myswaps-block .coin-icon-svg {
+  background: transparent;
+}
+
+.wallet-orderbooks .myswaps-block .myswaps-counter {
+  position: absolute;
+  top: 0;
+  padding: 5px;
+  background: #326464;
+}
+
+/* balance controls */
+.balance-controls {
+  background: rgba(27, 29, 35, 0.49);
+  width: 100%;
+  position: relative;
+  top: 45px;
+}
+
+.balance-controls .btn {
+  box-shadow: none;
+  background: transparent !important;
+}
+
+.balance-controls .input-group-addon {
+  background: transparent;
+  border: none;
+  color: #fff;
+}
+
+.input-group.col-sm-12.your_coins_balance_info:last-child {
+  border-top: solid 2px #282c34;
+}
+
+.your_coins_balance_info .btn {
+  margin-right: 20px;
+}
+
+.dex .wallet-wallets-header {
+  /*height: 526px;
+  padding-bottom: 30px !important;*/
+  height: auto;
+  padding-top: 100px !important;
+  padding-bottom: 100px !important;
+}
+
+.dex .component-header {
+  padding: 0;
+}
+
+.btn_switch_trading_coin_pairs {
+  position: relative;
+  left: -146px;
+  top: -14px;
+}
+
+.btn-trading_coin_balance_refresh {
+  position: relative;
+  left: -30px;
+  top: -15px;
+}
+
+.trading_sellcoin_ticker_name .btn,
+.trading_coin_ticker_name .btn {
+  margin-top: 10px !important;
+}
+
+.coin_balance_zcredits {
+  display: inline-block;
+  margin-left: 10px;
+}
+
+.trading_sellcoin_ticker_name,
+.trading_coin_ticker_name,
+.your_coins_balance_info {
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.trading_sellcoin_ticker_name img,
+.your_coins_balance_info img {
+  margin-right: 10px;
+}
+
+.trading_sellcoin_ticker_name .input-group-addon,
+.your_coins_balance_info .input-group-addon {
+  display: block;
+}
+
+.your_coins_balance_info {
+  padding-top: 10px;
+  margin-bottom: 15px;
+}
+
+.trading_coin_balance,
+.trading_sellcoin_balance {
+  text-align: right;
+  font-size: 16px;
+  width: 100%;
+  margin-top: 20px;
+}
+
+.input-group-addon .address {
+  font-size: 14px;
+  margin-top: 12px;
+  display: block;
+}
+
+.your_coins_balance_info .address,
+.your_coins_balance_info .coin-control-btn {
+  display: none;
+}
+
+.your_coins_balance_info .address,
+.your_coins_balance_info .coin-control-btn {
+  display: none;
+}
+
+.your_coins_balance_info.detailed-view .address,
+.your_coins_balance_info.detailed-view .coin-control-btn {
+  display: block;
+}
+
+.coin-control-btn {
+  margin-top: 10px;
+}
+
+.trading_coin_balance {
+  margin-top: 10px;
+}
+
+.wallet-balance-action {
+  padding: 0 !important;
+  top: 3px !important;
+  right: -354px;
+  margin: 0 !important;
+  text-decoration: none !important;
+}
+
+.wallet-balance-action .wallet-wallets-list-item_action {
+  width: 40px !important;
+  height: 40px !important;
+  font-size: 18px;
+}
+
+/* trade controls */
+.trade-body .trade {
+  width: 400px;
+  padding: 32px 10px 30px 10px;
+}
+
+.trade-body .bootstrap-select {
+  width: 100% !important;
+  margin-bottom: 10px;
+}
+
+.trade-body .bootstrap-select .btn.dropdown-toggle {
+  padding: 5px !important;
+}
+
+.trade-body .bootstrap-select.btn-group .dropdown-toggle .caret {
+  top: 47% !important;
+  /* dropup */
+  content: '';
+  border-top: 0;
+  border-bottom: 4px dashed;
+}
+
+.trade-body .bootstrap-select.btn-group .dropdown-toggle .caret:before {
+  top: -12px !important;
+  margin-top: 0 !important;
+}
+
+.trade-body .bootstrap-select .bs-searchbox .form-control {
+  background: #fff !important;
+  color: #000 !important;
+}
+
+.trade-body .bootstrap-select li a {
+  text-decoration: none !important;
+}
+
+.trade-body .form-group.buy_sell_amount_to {
+  text-align: left;
+}
+
+.trade-body .trade-button-wrapper {
+  margin-top: 25px;
+}
+
+.dex .trade-type-item button > div {
+  width: 66px;
+}
+
+.trading_pair_coin2 .dropdown-toggle {
+  background: #000;
+  color: #fff;
+  font: inherit;
+  outline: none;
+  border: 0;
+  -webkit-app-region: no-drag;
+  border-radius: 4px;
+  border: 2px solid #000;
+  box-shadow: 0 1px 1px 0 rgba(0,0,0,.2), 0 0 0 1px rgba(0,0,0,.1), 0 12px 24px 0 rgba(0,0,0,.05);
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.trading_pair_coin2 .dropdown-toggle .bs-caret {
+  display: inline-block;
+}
+
+.trading_pair_coin2 .btn.dropdown-toggle.btn-default img {
+  margin-right: 10px;
+}
+
+.trading_pair_coin2.open .btn.dropdown-toggle.btn-default,
+.trading_pair_coin2 .btn.dropdown-toggle:active {
+  border: 2px solid #8a0efb !important;
+  background: #000 !important;
+  color: #fff !important;
+}
+
+.trading_pair_coin2 .dropdown-header {
+  display: none;
+}
+
+.trading_pair_coin2 .form-control .bs-searchbox,
+.trading_pair_coin .dropdown-menu .bootstrap-select-searchbox input {
+  background: #fff;
+  color: #000;
+}
+
+.trading-sell-input .input-group-btn {
+  display: inline-block;
+  width: 18.5%;
+}
+
+.wallet.wallet-ready {
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.trading_buysell_options .btn.btn-info.active {
+  background: #363d4c;
+  border-color: #363d4c;
+}
+
+.trading_buysell_options .btn.btn-info {
+  background: #282c34;
+  border-color: #282c34;
+  outline: none !important;
+}
+
+/* scroll */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #666;
+  border-radius: 20px;
+}
+
+::-webkit-scrollbar-track {
+  background: #ddd;
+  border-radius: 20px;
+}
+
+/* temp, logo */
+.dex .dashboard-empty-logo svg {
+  top: 60px;
+}
+
+.mainbody,
+.switch-gui {
+  display: none !important;
+}
+
+/* orderbook */
+.ReactTable {
+  width: 50% !important;
+  float: left;
+  height: 50vh;
+}
+
+.orderbook_numasks,
+.orderbook_numbids {
+  position: absolute;
+  top: -35px;
+  padding: 5px;
+  background: #326464;
+  z-index: 10;
+}
+.orderbook_numbids {
+  left: 50%;
+}
+
+.trade-orderbook {
+  position: absolute;
+  bottom: 0;
+  overflow: visible !important;
+  width: 100%;
+}
+
+/* inventory */
+.screen-inventory {
+  background: #fff;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  z-index: 400;
+  color: #000;
+}

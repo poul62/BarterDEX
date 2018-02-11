@@ -127,6 +127,7 @@ $('.dexlogout-btn').click(function(e) {
 	//var shepherdresult = ShepherdIPC({"command":"logout"});
 	$('.mainbody').fadeOut();
 	$('.loginbody').fadeIn();
+	$('#dashboard-coins').hide();
 
 	var login_data = {};
 	login_data.passphrase = 'default';
@@ -147,6 +148,7 @@ $('.dexlogout-btn').click(function(e) {
 	Refresh_active_StockChart(false);
 	//sessionStorage.clear();
 });
+
 
 $('.dexdebug-btn').click(function(e) {
 	$('.navbar-right').children().removeClass('active');
@@ -193,7 +195,7 @@ $('.dexdebug-close-btn').click(function(e) {
 $('.login-genpass-btn').click(function(e){
 	e.preventDefault();
 	$('#login-btn').hide();
-	$('#passphrase-gen').hide();
+	$('#passphrase-gen').show();
 	$('#loginPassphrase').val(PassPhraseGenerator.generatePassPhrase(128));
 
 	/*var default_lang = JSON.parse(sessionStorage.getItem('mm_default_lang'));
@@ -293,12 +295,17 @@ $('.login-genpass-btn').click(function(e){
 
 });
 
-$('.login-btn').click(function(e) {
+// login buttons
+$('.login-btn,#passphrase-gen').click(function(e) {
 	e.preventDefault();
 	var login_data = {};
 	login_data.passphrase = $('.loginPassphrase').val();
 	login_data.netid = $('.loginNetid').val();
 	login_data.seednode = $('.loginSeednode').val();
+
+	$('#login-btn').show();
+	$('#passphrase-gen').hide();
+	$('#dashboard-coins').show();
 
 	if (login_data.netid > 14420) {
 		bootbox.alert({
@@ -324,7 +331,6 @@ $('.login-btn').click(function(e) {
 		BarterDEXSettingsFn();
 	}
 });
-
 
 $('.dexsettings-btn').click(function(e){
 	e.preventDefault();
